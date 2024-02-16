@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Gameoo",
-    "slug": "Gameoo",
+    "slug": "gameoo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e7e2a76d-38ab-42e6-86b2-bd743ace1a20"
+      }
+    },
+    "owner": "josoajuliano"
   }
 }
