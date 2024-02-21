@@ -2,6 +2,7 @@ import { Image, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, Text
 import React from 'react'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
+import { FontAwesome } from '@expo/vector-icons';
 
 const Login = () => {
   const navigation = useNavigation()
@@ -144,6 +145,39 @@ const Login = () => {
                         CREER UN COMPTE
                     </Text>
                 </Pressable>
+            </View>
+
+            <Text
+                style={{
+                    marginHorizontal: 52,
+                    marginTop: 10,
+                    fontFamily: "SF-Thin",
+                    fontSize: 16
+                }}
+            >
+                Vous préferez utiliser:
+            </Text>
+            <View
+                style={{
+                    marginHorizontal: 32,
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    marginTop: 20
+                }}
+            >
+                <TouchableOpacity>
+                    <FontAwesome name="facebook-square" size={40} color="black" />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <FontAwesome name="google" size={40} color="black" />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <FontAwesome name="instagram" size={40} color="black" />
+                </TouchableOpacity>
+
             </View>
         </View>
     </SafeAreaView>
