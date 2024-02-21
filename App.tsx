@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Login from './screens/auth/Login';
+import Onboarding from './screens/auth/Onboarding';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>This is the start of the gameoo project!</Text>
+      <Onboarding />
       <StatusBar style="auto" />
     </View>
   );
