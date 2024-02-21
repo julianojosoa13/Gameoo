@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gameoo.gameoo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +32,12 @@
         "projectId": "e7e2a76d-38ab-42e6-86b2-bd743ace1a20"
       }
     },
-    "owner": "josoajuliano"
+    "owner": "josoajuliano",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e7e2a76d-38ab-42e6-86b2-bd743ace1a20"
+    }
   }
 }
