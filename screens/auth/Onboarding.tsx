@@ -81,13 +81,12 @@ const Onboarding = () => {
                         marginHorizontal: 20,
                         marginTop: 30,
                         fontWeight: "300",
-                        maxWidth: "75%",
+                        maxWidth: "70%",
                         lineHeight: 18
                     }}
                 >
                     Jouez à nos jeux et recevez des récompenses inédites!
                     La plateforme sur laquelle jouer, c'est vraiment <Text style={{color: colors.MAIN_COLOR}}>GAGNER</Text>.
-                    Jouez à nos jeux et obtenez des recompenses réels auprès de nos partenaires!
                 </Text>
             </View>
 
