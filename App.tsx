@@ -5,6 +5,8 @@ import Onboarding from './screens/auth/Onboarding';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
 import { useCallback } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import AuthNavigator from './routes/auth/AuthNavigator';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,10 +25,9 @@ export default function App() {
   if (!fontsLoaded) return null
 
   return (
-    <>
-      <Onboarding />
-      <StatusBar style="light" />
-    </>
+    <NavigationContainer>
+      <AuthNavigator />
+    </NavigationContainer>
   );
 }
 

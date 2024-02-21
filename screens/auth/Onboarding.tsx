@@ -1,9 +1,11 @@
 import { ImageBackground, Image, SafeAreaView, StyleSheet, Text, View, useWindowDimensions, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
 import { colors } from '../../utils/colors'
+import { useNavigation } from '@react-navigation/native'
 
 
 const Onboarding = () => {
+  const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
   return (
@@ -20,7 +22,9 @@ const Onboarding = () => {
                 height: "65%",
                 width: "100%",
                 borderTopRightRadius: 35,
-                borderTopLeftRadius: 35
+                borderTopLeftRadius: 35,
+
+                elevation: 2
             }}
         >
             <TouchableOpacity
@@ -81,7 +85,7 @@ const Onboarding = () => {
                         lineHeight: 18
                     }}
                 >
-                    La plateforme sur lequel jouer, c'est vraiment Gagner.
+                    La plateforme sur laquelle jouer, c'est vraiment <Text style={{color: colors.MAIN_COLOR}}>GAGNER</Text>.
                     Jouez à nos jeux et obtenez des recompenses réels auprès de nos partenaires!
                 </Text>
             </View>
@@ -103,6 +107,7 @@ const Onboarding = () => {
                         borderRadius: 10,
                         marginTop: 20,
                     }}
+                    onPress={() => navigation.navigate("Login")}
                 >
                     <Text
                         style={{
