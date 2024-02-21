@@ -36,7 +36,8 @@ const Onboarding = () => {
                     borderRadius: bwLogoWidth /2,
                     backgroundColor: colors.WHITE,
                     alignSelf: "center",
-                    marginTop: 25,
+                    marginTop: 20,
+                    marginBottom: 30,
 
                     elevation: 2
                 }}
