@@ -85,6 +85,7 @@ const Onboarding = () => {
                         lineHeight: 18
                     }}
                 >
+                    Jouez à nos jeux et recevez des récompenses inédites!
                     La plateforme sur laquelle jouer, c'est vraiment <Text style={{color: colors.MAIN_COLOR}}>GAGNER</Text>.
                     Jouez à nos jeux et obtenez des recompenses réels auprès de nos partenaires!
                 </Text>
