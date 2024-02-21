@@ -126,6 +126,7 @@ const Onboarding = () => {
                         marginTop: 20,
                     }}
                     hitSlop={2}
+                    onPress={() => navigation.navigate("Register")}
                 >
                     <Text
                         style={{

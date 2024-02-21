@@ -4,7 +4,7 @@ import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 
-const Login = () => {
+const Register = () => {
   const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
@@ -23,7 +23,6 @@ const Login = () => {
         >
             <FontAwesome6 name="chevron-left" size={25} color={colors.WHITE_ALT}/>
         </TouchableOpacity>
-        
         <Image source={require("../../assets/branding/LOGO-Gameoo-symbole-PNG.png")} style={{marginLeft: 10, marginTop: 75, width: 100, height: 100}}/>
         <View
             style={{
@@ -49,7 +48,7 @@ const Login = () => {
                     borderRadius: bwLogoWidth /2,
                     backgroundColor: colors.WHITE,
                     alignSelf: "center",
-                    marginTop: 20,
+                    marginTop: 15,
 
                     elevation: 2
                 }}
@@ -68,13 +67,12 @@ const Login = () => {
                     style={{
                         fontFamily: "Modak",
                         fontSize: 22,
-                        marginTop: 10,
                         maxWidth: "55%",
                         textAlign: "center",
                         color: colors.MAIN_COLOR
                     }}
                 >
-                    Se Connecter
+                    Créer un Compte
                 </Text>
             </View>
 
@@ -92,12 +90,12 @@ const Login = () => {
                         style={{
                             width: "100%",
                             backgroundColor: colors.WHITE,
-                            marginTop: 5,
-                            padding: 8,
+                            marginTop: 2,
+                            padding: 6,
                             borderRadius: 20
                         }}
                     >
-                        <TextInput placeholder="Email ou nom d'utilisateur" style={{width: "100%", fontFamily: "SF-Regular"}}/>
+                        <TextInput placeholder="Email ou nom d'utilisateur" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}}/>
                     </View>
                 </View>
 
@@ -109,12 +107,28 @@ const Login = () => {
                         style={{
                             width: "100%",
                             backgroundColor: colors.WHITE,
-                            marginTop: 5,
-                            padding: 8,
+                            marginTop: 2,
+                            padding: 6,
                             borderRadius: 20
                         }}
                     >
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular"}} secureTextEntry={true}/>
+                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true}/>
+                    </View>
+                </View>
+                <View
+                    style={{marginHorizontal: 20, marginBottom: 15}}
+                >
+                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin"}}>Confirmer mot de passe</Text>
+                    <View
+                        style={{
+                            width: "100%",
+                            backgroundColor: colors.WHITE,
+                            marginTop: 2,
+                            padding: 6,
+                            borderRadius: 20
+                        }}
+                    >
+                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true}/>
                     </View>
                 </View>
 
@@ -129,47 +143,21 @@ const Login = () => {
                         marginTop: 5,
                         alignSelf: "center"
                     }}
+                    onPress={() => navigation.navigate("FinalStep")}
                 >
                     <Text
                         style={{
                             fontFamily: "SF-Semibold",
                             color: colors.WHITE,
-                            fontSize: 15,
+                            fontSize: 12,
                         }}
                     >
-                        CONNEXION
+                        ENREGISTRER
                     </Text>
                 </TouchableOpacity>
-                <Text style={{textAlign: "center", marginTop: 10}}>OU</Text>
-                <Pressable
-                    style={{
-                        alignSelf: "center"
-                    }}
-                    hitSlop={2}
-                    onPress={() => navigation.navigate("Register")}
-                >
-                    <Text
-                        style={{
-                            color: colors.ACCENT_COLOR,
-                            fontFamily: "SF-Semibold",
-                            fontSize: 13,
-                        }}
-                    >
-                        CREER UN COMPTE
-                    </Text>
-                </Pressable>
+                <Text style={{textAlign: "center", marginTop: 10}}>OU {'\n'}UTILISER</Text>
             </View>
 
-            <Text
-                style={{
-                    marginHorizontal: 52,
-                    marginTop: 10,
-                    fontFamily: "SF-Thin",
-                    fontSize: 16
-                }}
-            >
-                Vous préferez utiliser:
-            </Text>
             <View
                 style={{
                     marginHorizontal: 32,
@@ -197,6 +185,6 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
 
 const styles = StyleSheet.create({})
