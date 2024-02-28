@@ -15,7 +15,7 @@ const Onboarding = () => {
         <View
             style={{
                 opacity: 0.87,
-                backgroundColor: colors.WHITE_ALT,
+                backgroundColor: colors.SEMI_TRANSPARENT,
                 position: "absolute",
                 bottom: 0,
                 left: 0,
@@ -58,7 +58,7 @@ const Onboarding = () => {
                         fontSize: 28,
                         maxWidth: "55%",
                         textAlign: "center",
-                        color: colors.ACCENT_COLOR
+                        color: colors.WHITE
                     }}
                 >
                     Bienvenue sur {" "} 
@@ -77,7 +77,7 @@ const Onboarding = () => {
                     style={{
                         fontSize: 17,
                         fontFamily: "SF-Regular",
-                        color: colors.ACCENT_COLOR,
+                        color: colors.WHITE,
                         textAlign: "center",
                         marginHorizontal: 20,
                         marginTop: 30,
@@ -130,12 +130,12 @@ const Onboarding = () => {
                 >
                     <Text
                         style={{
-                            color: colors.ACCENT_COLOR,
+                            color: colors.WHITE,
                             fontFamily: "SF-Semibold",
                             fontSize: 13,
                         }}
                     >
-                        CREER UN COMPTE
+                        PASSER
                     </Text>
                 </Pressable>
 

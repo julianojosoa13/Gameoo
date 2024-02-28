@@ -28,7 +28,7 @@ const Login = () => {
         <View
             style={{
                 opacity: 0.87,
-                backgroundColor: colors.WHITE_ALT,
+                backgroundColor: colors.SEMI_TRANSPARENT,
                 position: "absolute",
                 bottom: 0,
                 left: 0,
@@ -87,11 +87,11 @@ const Login = () => {
                 <View
                     style={{marginHorizontal: 20, marginBottom: 15}}
                 >
-                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin"}}>Identifiant</Text>
+                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin",color: colors.WHITE}}>Identifiant</Text>
                     <View
                         style={{
                             width: "100%",
-                            backgroundColor: colors.WHITE,
+                            backgroundColor: colors.LIGHT_GREY,
                             marginTop: 5,
                             padding: 8,
                             borderRadius: 20
@@ -104,11 +104,11 @@ const Login = () => {
                 <View
                     style={{marginHorizontal: 20, marginBottom: 15}}
                 >
-                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin"}}>Mot de passe</Text>
+                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin", color: colors.WHITE}}>Mot de passe</Text>
                     <View
                         style={{
                             width: "100%",
-                            backgroundColor: colors.WHITE,
+                            backgroundColor: colors.LIGHT_GREY,
                             marginTop: 5,
                             padding: 8,
                             borderRadius: 20
@@ -140,7 +140,7 @@ const Login = () => {
                         CONNEXION
                     </Text>
                 </TouchableOpacity>
-                <Text style={{textAlign: "center", marginTop: 10}}>OU</Text>
+                <Text style={{textAlign: "center", marginTop: 10,color: colors.WHITE}}>OU</Text>
                 <Pressable
                     style={{
                         alignSelf: "center"
@@ -150,7 +150,7 @@ const Login = () => {
                 >
                     <Text
                         style={{
-                            color: colors.ACCENT_COLOR,
+                            color: colors.MAIN_COLOR,
                             fontFamily: "SF-Semibold",
                             fontSize: 13,
                         }}
@@ -165,7 +165,8 @@ const Login = () => {
                     marginHorizontal: 52,
                     marginTop: 10,
                     fontFamily: "SF-Thin",
-                    fontSize: 16
+                    fontSize: 16,
+                    color: colors.WHITE
                 }}
             >
                 Vous préferez utiliser:
@@ -180,16 +181,16 @@ const Login = () => {
                 }}
             >
                 <TouchableOpacity>
-                    <FontAwesome name="facebook-square" size={40} color="black" />
+                    <FontAwesome name="facebook-square" size={40} color="blue" />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <FontAwesome name="google" size={40} color="black" />
+                    <FontAwesome name="google" size={40} color="orange" />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <FontAwesome name="instagram" size={40} color="black" />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
             </View>
         </View>

@@ -89,10 +89,11 @@ const Register = () => {
                     <View
                         style={{
                             width: "100%",
-                            backgroundColor: colors.WHITE,
+                            backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
                             padding: 6,
-                            borderRadius: 20
+                            borderRadius: 10,
+                            elevation: 1,
                         }}
                     >
                         <TextInput placeholder="Email ou nom d'utilisateur" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}}/>
@@ -106,10 +107,10 @@ const Register = () => {
                     <View
                         style={{
                             width: "100%",
-                            backgroundColor: colors.WHITE,
+                            backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
                             padding: 6,
-                            borderRadius: 20
+                            borderRadius: 10
                         }}
                     >
                         <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true}/>
@@ -122,10 +123,10 @@ const Register = () => {
                     <View
                         style={{
                             width: "100%",
-                            backgroundColor: colors.WHITE,
+                            backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
                             padding: 6,
-                            borderRadius: 20
+                            borderRadius: 10
                         }}
                     >
                         <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true}/>
@@ -175,9 +176,9 @@ const Register = () => {
                     <FontAwesome name="google" size={40} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <FontAwesome name="instagram" size={40} color="black" />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
             </View>
         </View>
