@@ -4,6 +4,7 @@ import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Feather, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { supabase } from '../../supabase/supabase';
+import { Dialog } from 'react-native-alert-notification';
 
 AppState.addEventListener('change', (state) => {
     if (state === 'active') {
@@ -44,8 +45,16 @@ const Register = () => {
 
     if (error) Alert.alert(error.message)
     if (!session) {
-        Alert.alert('Auth', 'Vérifiez votre compte en entrant le code envoyé dans votre boîte Email ou en cliquant sur le lien!')
-        navigation.replace("OTPVerif", {email: email})
+        Dialog.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: 'Login',
+            textBody: 'Veuillez vérifiez votre adresse email!',
+            button: 'Ok',
+            onPressButton: () => {
+                navigation.replace("OTPVerif", {email: email})
+                Dialog.hide()
+            }
+        })
     }
     setLoading(false)
   }
