@@ -22,7 +22,7 @@ const OTPVerification = () => {
   const handleInputChange = (text: string, index: number) => {
     if( text.trim() === "") return
 
-    if (text.length === 1 && index < 7) {
+    if (text.length === 1 && index < 5) {
       inputRefs[index + 1].current.focus();
     }
     // Handle storing the input value, e.g., in state
@@ -37,7 +37,11 @@ const OTPVerification = () => {
       inputRefs[index - 1].current.focus()
     }
     // Handle removing the input value, e.g., in state
-  }; 
+  };
+  
+  const VerifOTP = async () => {
+    const code = String(codeList.join(''))
+  }
 
   return (
     <SafeAreaView style={{flex:1}}>
@@ -119,6 +123,20 @@ const OTPVerification = () => {
                 </View>
             </View>
             <View>
+                <View style={{ flexDirection: 'row', justifyContent: "center", gap:6 }}>
+                    {inputRefs.map((ref, index) => (
+                        <TextInput
+                            key={index}
+                            ref={ref}
+                            style={{ borderWidth: 1, width: 50, height: 50, textAlign: 'center', borderRadius: 10, borderColor: colors.WHITE, color: colors.WHITE, fontSize: 25 }}
+                            maxLength={1}
+                            keyboardType="number-pad"
+                            onChangeText={(text) => handleInputChange(text, index)}
+                            onKeyPress={(event) => handleBackspace(event, index)}
+                            autoCapitalize='none'
+                        />
+                    ))}
+                </View>
                 <View
                     style={{
                         alignSelf: "center"
@@ -137,20 +155,7 @@ const OTPVerification = () => {
                         Veuillez entrer le code qu'on vous a envoyé à votre adresse email!
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: "center", gap:6 }}>
-                    {inputRefs.map((ref, index) => (
-                        <TextInput
-                            key={index}
-                            ref={ref}
-                            style={{ borderWidth: 1, width: 50, height: 50, textAlign: 'center', borderRadius: 10, borderColor: colors.WHITE, color: colors.WHITE, fontSize: 25 }}
-                            maxLength={1}
-                            keyboardType="number-pad"
-                            onChangeText={(text) => handleInputChange(text, index)}
-                            onKeyPress={(event) => handleBackspace(event, index)}
-                            autoCapitalize='none'
-                        />
-                    ))}
-                </View>
+                
             </View>
             <TouchableOpacity
                 style={{
@@ -163,7 +168,7 @@ const OTPVerification = () => {
                     marginTop: 5,
                     alignSelf: "center"
                 }}
-                onPress={() => null}
+                onPress={VerifOTP}
             >
                 <Text
                     style={{

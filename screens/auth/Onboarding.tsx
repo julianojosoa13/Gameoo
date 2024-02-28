@@ -1,4 +1,22 @@
-import { ImageBackground, Image, SafeAreaView, StyleSheet, Text, View, useWindowDimensions, TouchableOpacity, Pressable } from 'react-native'
+import { 
+    ImageBackground, 
+    Image, 
+    SafeAreaView, 
+    StyleSheet, 
+    Text, 
+    View, 
+    useWindowDimensions, 
+    TouchableOpacity, 
+    Pressable 
+} from 'react-native'
+
+import { 
+    ALERT_TYPE, 
+    Dialog, 
+    AlertNotificationRoot, 
+    Toast 
+} from 'react-native-alert-notification';
+
 import React from 'react'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
@@ -9,6 +27,19 @@ const Onboarding = () => {
   const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
+
+  const GoToApp = async () => {
+    Dialog.show({
+        type: ALERT_TYPE.INFO,
+        title: 'Gameoo',
+        textBody: 'Vous pouvez utiliser Gameoo sans créer de compte! Néanmoins, vous devez être authentifié pour réclamer vos Recompenses!',
+        button: 'Compris',
+        onPressButton: () => {
+            console.log("got to app")
+            Dialog.hide()
+        }
+    })
+  }
   return (
     <SafeAreaView style={{flex:1}}>
         <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
@@ -64,7 +95,7 @@ const Onboarding = () => {
                 <Text
                     style={{
                         fontFamily: "SF-Regular",
-                        fontSize: 28,
+                        fontSize: 24,
                         maxWidth: "55%",
                         textAlign: "center",
                         color: colors.WHITE
@@ -107,6 +138,21 @@ const Onboarding = () => {
                     marginTop: 30,
                 }}
             >
+                <Pressable
+                    hitSlop={2}
+                    onPress={GoToApp}
+                >
+                    <Text
+                        style={{
+                            color: colors.WHITE,
+                            fontFamily: "SF-Semibold",
+                            fontSize: 16,
+                            marginBottom: 24
+                        }}
+                    >
+                        COMMENCER
+                    </Text>
+                </Pressable>
                 <TouchableOpacity
                     style={{
                         backgroundColor: "orange",
@@ -115,7 +161,7 @@ const Onboarding = () => {
                         alignItems: "center",
                         padding: 10,
                         borderRadius: 10,
-                        marginTop: 20,
+                        marginBottom: 24,
                     }}
                     onPress={() => navigation.navigate("Login")}
                 >
@@ -129,25 +175,6 @@ const Onboarding = () => {
                         SE CONNECTER
                     </Text>
                 </TouchableOpacity>
-
-                <Pressable
-                    style={{
-                        marginTop: 20,
-                    }}
-                    hitSlop={2}
-                    onPress={() => navigation.navigate("Register")}
-                >
-                    <Text
-                        style={{
-                            color: colors.WHITE,
-                            fontFamily: "SF-Semibold",
-                            fontSize: 13,
-                        }}
-                    >
-                        JOUER (PASSER)
-                    </Text>
-                </Pressable>
-
             </View>
         </View>
     </SafeAreaView>

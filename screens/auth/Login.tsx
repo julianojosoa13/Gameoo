@@ -20,6 +20,7 @@ import { supabase } from '../../supabase/supabase'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification'
 
 AppState.addEventListener('change', (state) => {
     if (state === 'active') {
@@ -47,11 +48,29 @@ const Login = () => {
 
     if (error) {
         if(error.message === "Email not confirmed") {
-            // Alert.alert("Login","Veuillez confirmez votre adresse email!")
-            navigation.navigate("OTPVerif", {email: email})
+            Dialog.show({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Login',
+                textBody: 'Veuillez vérifiez votre adresse email!',
+                button: 'Ok',
+                onPressButton: () => {
+                    navigation.navigate("OTPVerif", {email: email})
+                    Dialog.hide()
+                }
+            })
+            
         } else {
-            Alert.alert("Login","Nom d'utilisateur ou mot de passe incorrect!")
-            console.log(error.message)
+            Dialog.show({
+                type: ALERT_TYPE.DANGER,
+                title: 'Login',
+                textBody: "Nom d'utilisateur ou mot de passe incorrect!",
+                button: 'Fermer',
+                onPressButton: () => {
+                    console.log(error.message)
+                    Dialog.hide()
+                }
+            })
+           
         }
     }
     setLoading(false)
@@ -149,7 +168,7 @@ const Login = () => {
                         }}
                     >
                         <FontAwesome6 name="user" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Email ou nom d'utilisateur" style={{width: "100%", fontFamily: "SF-Regular"}} onChangeText={(text) => setEmail(text)} autoCapitalize={"none"}/>
+                        <TextInput keyboardType="email-address" placeholder="Email ou nom d'utilisateur" style={{width: "100%", fontFamily: "SF-Regular", fontSize: 20}} onChangeText={(text) => setEmail(text)} autoCapitalize={"none"}/>
                     </View>
                 </View>
 
@@ -170,7 +189,7 @@ const Login = () => {
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular"}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
+                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", fontSize: 20}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
                     </View>
                 </View>
                 {loading ? (

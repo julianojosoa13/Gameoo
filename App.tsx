@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font';
 import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './routes/auth/AuthNavigator';
+import { AlertNotificationRoot } from 'react-native-alert-notification';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,7 +27,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AuthNavigator />
+      <AlertNotificationRoot>
+        <AuthNavigator />
+      </AlertNotificationRoot>
     </NavigationContainer>
   );
 }

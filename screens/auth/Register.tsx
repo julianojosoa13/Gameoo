@@ -141,7 +141,7 @@ const Register = () => {
                         }}
                     >
                         <Feather name="mail" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput autoCapitalize={"none"} placeholder="Adresse email" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} onChangeText={(text) => setEmail(text)}/>
+                        <TextInput autoCapitalize={"none"} placeholder="Adresse email" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8, fontSize: 20}} onChangeText={(text) => setEmail(text)}/>
                     </View>
                 </View>
 
@@ -162,7 +162,7 @@ const Register = () => {
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
+                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8, fontSize: 20}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
                     </View>
                 </View>
                 <View
@@ -182,7 +182,7 @@ const Register = () => {
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Confirmer le mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)}/>
+                        <TextInput placeholder="Confirmer le mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8, fontSize: 20}} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)}/>
                     </View>
                 </View>
                 {loading? (
