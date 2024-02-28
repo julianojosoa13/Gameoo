@@ -1,11 +1,28 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FinalStep from '../../screens/auth/FinalStep';
+import { Session } from '@supabase/supabase-js';
 
-const AppNavigator = () => {
+const Stack = createNativeStackNavigator();
+
+const AppNavigator = ({ session }: { session: Session | null }) => {
   return (
-    <View>
-      <Text>AppNavigator</Text>
-    </View>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      {session && session.user ? (
+        <>
+          <Stack.Screen name='FinalStep' component={FinalStep} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name='FinalStep' component={FinalStep} />
+        </>
+      )}
+    </Stack.Navigator>
   )
 }
 

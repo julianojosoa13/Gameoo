@@ -4,7 +4,8 @@ import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Feather, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { supabase } from '../../supabase/supabase';
-import { Dialog } from 'react-native-alert-notification';
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 AppState.addEventListener('change', (state) => {
     if (state === 'active') {
@@ -26,12 +27,28 @@ const Register = () => {
 
   const signUpWithEmail = async () => {
     if(email.trim() === "" || password === "" || confirmPassword === "") {
-        Alert.alert("Auth","Veuillez remplir tous les champs!")
+        Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: 'Auth',
+            textBody: 'Veuillez remplir tous les champs!',
+            button: 'Ok',
+            onPressButton: () => {
+                Dialog.hide()
+            }
+        })
         return
     }
 
     if(password !== confirmPassword) {
-        Alert.alert("Auth", "La confirmation du mot de passe ne concorde pas!")
+        Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: 'Auth',
+            textBody: 'La confirmation du mot de passe ne concorde pas!',
+            button: 'Ok',
+            onPressButton: () => {
+                Dialog.hide()
+            }
+        })
         return
     }
     setLoading(true)
@@ -60,7 +77,7 @@ const Register = () => {
   }
   
   return (
-    <SafeAreaView style={{flex:1}}>
+    <KeyboardAwareScrollView contentContainerStyle={{flex:1}} >
         <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
         <TouchableOpacity
             style={{
@@ -84,7 +101,6 @@ const Register = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
-                justifyContent: "space-around",
 
                 elevation: 2
             }}
@@ -186,7 +202,7 @@ const Register = () => {
                             borderRadius: 10,
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "flex-start"
+                            justifyContent: "flex-start",
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
@@ -222,7 +238,7 @@ const Register = () => {
                 )}
                 
             </View>
-            <Text style={{textAlign: "center", marginTop: 20, color: colors.WHITE}}>OU</Text>
+            <Text style={{textAlign: "center", marginTop: 10, color: colors.WHITE}}>OU</Text>
 
             <View
                 style={{
@@ -232,8 +248,8 @@ const Register = () => {
                     alignItems: "center",
                     marginBottom: 38,
                     backgroundColor: colors.SEMI_TRANSPARENT,
-                    marginTop: 20,
-                    paddingVertical: 15,
+                    marginTop: 10,
+                    paddingVertical: 10,
                     borderRadius: 25
                 }}
             >
@@ -247,7 +263,7 @@ const Register = () => {
 
             </View>
         </View>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
 

@@ -22,6 +22,7 @@ import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { ALERT_TYPE, Dialog } from 'react-native-alert-notification'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 AppState.addEventListener('change', (state) => {
     if (state === 'active') {
@@ -80,7 +81,7 @@ const Login = () => {
   }
   
   return (
-    <SafeAreaView style={{flex:1}}>
+    <KeyboardAwareScrollView contentContainerStyle={{flex:1}}>
         <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
         <TouchableOpacity
             style={{
@@ -105,7 +106,6 @@ const Login = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
-                justifyContent: "space-around",
 
                 elevation: 2
             }}
@@ -236,7 +236,7 @@ const Login = () => {
                         color: colors.MAIN_COLOR,
                         fontFamily: "SF-Semibold",
                         fontSize: 16,
-                        marginTop: 20
+                        marginTop: 10
                     }}
                 >
                     CREER UN COMPTE
@@ -252,9 +252,9 @@ const Login = () => {
                     justifyContent: "space-around",
                     marginBottom: 20,
                     backgroundColor: colors.SEMI_TRANSPARENT,
-                    paddingVertical: 25,
+                    paddingVertical: 10,
                     borderRadius: 25,
-                    marginTop: 20,
+                    marginTop: 15,
                 }}
             >
                 
@@ -268,7 +268,7 @@ const Login = () => {
 
             </View>
         </View>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
 

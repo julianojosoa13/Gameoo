@@ -1,7 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
-import Login from './screens/auth/Login';
-import Onboarding from './screens/auth/Onboarding';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
 import { useCallback, useEffect, useState } from 'react';
@@ -10,7 +7,8 @@ import AuthNavigator from './routes/auth/AuthNavigator';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase/supabase';
-import FinalStep from './screens/auth/FinalStep';
+import AppNavigator from './routes/app/AppNavigator';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -46,7 +44,7 @@ export default function App() {
       <AlertNotificationRoot>
         <StatusBar />
         {
-          session && session.user ? <FinalStep /> : <AuthNavigator />
+          session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
         }
       </AlertNotificationRoot>
     </NavigationContainer>
