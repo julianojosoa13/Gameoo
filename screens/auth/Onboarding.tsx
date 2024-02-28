@@ -33,7 +33,7 @@ const Onboarding = () => {
                 borderTopLeftRadius: 45,
                 justifyContent: "space-around",
 
-                elevation: 2
+                elevation: 4
             }}
         >
             <TouchableOpacity

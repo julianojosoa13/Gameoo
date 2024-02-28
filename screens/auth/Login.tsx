@@ -1,8 +1,32 @@
-import { Image, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { 
+    Image, 
+    ImageBackground, 
+    Pressable, 
+    SafeAreaView, 
+    StyleSheet, 
+    Text, 
+    TextInput, 
+    TouchableOpacity, 
+    View, 
+    useWindowDimensions, 
+    Alert,
+    AppState
+} from 'react-native'
+
 import React from 'react'
+
+import { supabase } from '../../supabase/supabase'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
+
+AppState.addEventListener('change', (state) => {
+    if (state === 'active') {
+      supabase.auth.startAutoRefresh()
+    } else {
+      supabase.auth.stopAutoRefresh()
+    }
+  })
 
 const Login = () => {
   const navigation = useNavigation()
