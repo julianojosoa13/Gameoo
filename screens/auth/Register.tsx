@@ -141,16 +141,15 @@ const Register = () => {
                             width: "100%",
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
-                            padding: 6,
+                            height: 45,
                             borderRadius: 10,
                             elevation: 1,
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "flex-start"
                         }}
                     >
                         <Feather name="mail" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput autoCapitalize={"none"} placeholder="Adresse email" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8, fontSize: 20}} onChangeText={(text) => setEmail(text)}/>
+                        <TextInput autoCapitalize={"none"} placeholder="Adresse email" keyboardType="email-address" style={{ fontFamily: "SF-Regular", marginLeft: 8, fontSize: 17}} onChangeText={(text) => setEmail(text)}/>
                     </View>
                 </View>
 
@@ -163,7 +162,7 @@ const Register = () => {
                             width: "100%",
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
-                            padding: 6,
+                            height: 45,
                             borderRadius: 10,
                             flexDirection: "row",
                             alignItems: "center",
@@ -171,7 +170,7 @@ const Register = () => {
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8, fontSize: 20}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
+                        <TextInput placeholder="Mot de passe" style={{fontFamily: "SF-Regular", marginLeft: 8, fontSize: 17}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
                     </View>
                 </View>
                 <View
@@ -183,7 +182,7 @@ const Register = () => {
                             width: "100%",
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
-                            padding: 6,
+                            height: 45,
                             borderRadius: 10,
                             flexDirection: "row",
                             alignItems: "center",
@@ -191,7 +190,7 @@ const Register = () => {
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Confirmer le mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8, fontSize: 20}} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)}/>
+                        <TextInput placeholder="Confirmer le mot de passe" style={{fontFamily: "SF-Regular", marginLeft: 8, fontSize: 17}} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)}/>
                     </View>
                 </View>
                 {loading? (

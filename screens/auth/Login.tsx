@@ -41,7 +41,7 @@ const Login = () => {
   const signInWithEmail = async () => {
     if(email.trim() === "" || password === "") return
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
@@ -73,6 +73,7 @@ const Login = () => {
            
         }
     }
+    console.log(data)
     setLoading(false)
   }
   
@@ -160,15 +161,14 @@ const Login = () => {
                             width: "100%",
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 5,
-                            padding: 8,
                             borderRadius: 20,
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "flex-start"
+                            height: 50
                         }}
                     >
                         <FontAwesome6 name="user" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput keyboardType="email-address" placeholder="Email ou nom d'utilisateur" style={{width: "100%", fontFamily: "SF-Regular", fontSize: 20}} onChangeText={(text) => setEmail(text)} autoCapitalize={"none"}/>
+                        <TextInput keyboardType="email-address" placeholder="Email ou nom d'utilisateur" style={{ fontFamily: "SF-Regular", fontSize: 17}} onChangeText={(text) => setEmail(text)} autoCapitalize={"none"}/>
                     </View>
                 </View>
 
@@ -181,15 +181,14 @@ const Login = () => {
                             width: "100%",
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 5,
-                            padding: 8,
                             borderRadius: 20,
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "flex-start"
+                            height: 50
                         }}
                     >
                         <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", fontSize: 20}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
+                        <TextInput placeholder="Mot de passe" style={{fontFamily: "SF-Regular", fontSize: 17}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
                     </View>
                 </View>
                 {loading ? (

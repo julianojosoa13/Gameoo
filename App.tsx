@@ -4,10 +4,13 @@ import Login from './screens/auth/Login';
 import Onboarding from './screens/auth/Onboarding';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './routes/auth/AuthNavigator';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
+import { Session } from '@supabase/supabase-js';
+import { supabase } from './supabase/supabase';
+import FinalStep from './screens/auth/FinalStep';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,12 +26,28 @@ export default function App() {
     }
   }, [fontsLoaded])
 
+  
+  const [session, setSession] = useState<Session | null>(null)
+  
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+    
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+  
   if (!fontsLoaded) return null
 
   return (
     <NavigationContainer>
       <AlertNotificationRoot>
-        <AuthNavigator />
+        <StatusBar />
+        {
+          session && session.user ? <FinalStep /> : <AuthNavigator />
+        }
       </AlertNotificationRoot>
     </NavigationContainer>
   );

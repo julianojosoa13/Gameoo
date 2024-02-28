@@ -4,8 +4,9 @@ import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import LottieView from 'lottie-react-native'
 import { FontAwesome6 } from '@expo/vector-icons'
+import { supabase } from '../../supabase/supabase'
 
-const FInalStep = () => {
+const FinalStep = () => {
   const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
@@ -13,17 +14,6 @@ const FInalStep = () => {
   return (
     <View style={{flex: 1}}>
       <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
-      <TouchableOpacity
-            style={{
-                position: "absolute",
-                marginVertical: 38,
-                marginHorizontal: 24
-            }}
-            hitSlop={8}
-            onPress={() => navigation.goBack()}
-        >
-            <FontAwesome6 name="chevron-left" size={25} color={colors.WHITE_ALT}/>
-        </TouchableOpacity>
         
         <Image source={require("../../assets/branding/LOGO-Gameoo-symbole-PNG.png")} style={{marginLeft: 10, marginTop: 75, width: 100, height: 100}}/>
         <View
@@ -114,6 +104,7 @@ const FInalStep = () => {
                         marginTop: 25,
                         alignSelf: "center",
                     }}
+                    onPress={()=> supabase.auth.signOut()}
                 >
                     <View
                         style={{flexDirection: "row",alignItems: "center"}}
@@ -139,6 +130,6 @@ const FInalStep = () => {
   )
 }
 
-export default FInalStep
+export default FinalStep
 
 const styles = StyleSheet.create({})

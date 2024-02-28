@@ -1,9 +1,11 @@
-import { Image, ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import React, { useRef, useState } from 'react'
+import { ActivityIndicator, Image, ImageBackground, Keyboard, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { colors } from '../../utils/colors'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import LottieView from 'lottie-react-native'
+import { supabase } from '../../supabase/supabase'
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification'
 
 
 
@@ -13,6 +15,7 @@ const OTPVerification = () => {
 
   const inputRefs = Array(6).fill(0).map((_, i) => useRef(null));
   const [codeList, setCodeList] = useState(Array(6).fill(''))
+  const [loading, setLoading] = useState(false)
 
   const {email} = route.params
 
@@ -37,11 +40,82 @@ const OTPVerification = () => {
       inputRefs[index - 1].current.focus()
     }
     // Handle removing the input value, e.g., in state
+    let activationCode =  [...codeList]
+    activationCode[index] = ""
+
+    setCodeList(activationCode)
   };
-  
-  const VerifOTP = async () => {
-    const code = String(codeList.join(''))
+  const resendCode = async () => {
+    setLoading(true)
+    const { data, error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          // set this to false if you do not want the user to be automatically signed up
+          shouldCreateUser: false,
+        },
+      })
+
+    console.log(data,error)
+    setLoading(false)
   }
+  const VerifOTP = async () => {
+    setLoading(true)
+    const code = String(codeList.join(''))
+    console.log(code)
+    console.log(typeof(code))
+    console.log(code.length)
+
+    const {
+        data: { session },
+        error,
+      } = await supabase.auth.verifyOtp({
+        email,
+        token: code,
+        type: 'email',
+      })
+
+    if (error) {
+        console.log(error)
+        if(error.message === "Token has expired or is invalid") {
+            Dialog.show({
+                type: ALERT_TYPE.WARNING,
+                title: 'Verification',
+                textBody: 'Le code est invalide ou a déjà expiré!',
+                button: 'Renvoyer',
+                onPressButton: async () => {
+                    inputRefs.map(input => {
+                        input?.current?.clear()
+                    })
+                    setCodeList(Array(6).fill(''))
+                    await resendCode()
+
+                    Dialog.hide()
+                }
+            })
+        }
+        setLoading(false)
+        return
+    }
+    Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Verification',
+        textBody: 'Votre adresse email a bien été vérifié!',
+        button: 'Fermer',
+        onPressButton: async () => {
+            console.log(session)
+            Dialog.hide()
+        }
+    })
+    setLoading(false)
+  }
+
+  useEffect(()=>{
+    const code = String(codeList.join(''))
+    if(code.trim().length === 6) {
+        Keyboard.dismiss()
+        VerifOTP()
+    }
+  }, [codeList])
 
   return (
     <SafeAreaView style={{flex:1}}>
@@ -157,29 +231,33 @@ const OTPVerification = () => {
                 </View>
                 
             </View>
-            <TouchableOpacity
-                style={{
-                    backgroundColor: colors.ORANGE,
-                    width: "80%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: 10,
-                    borderRadius: 10,
-                    marginTop: 5,
-                    alignSelf: "center"
-                }}
-                onPress={VerifOTP}
-            >
-                <Text
+            {loading? (
+                <ActivityIndicator size={"large"} color={"purple"}/>
+            ) :(
+                <TouchableOpacity
                     style={{
-                        fontFamily: "SF-Semibold",
-                        color: colors.WHITE,
-                        fontSize: 15,
+                        backgroundColor: colors.ORANGE,
+                        width: "80%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 10,
+                        borderRadius: 10,
+                        marginTop: 5,
+                        alignSelf: "center"
                     }}
+                    onPress={VerifOTP}
                 >
-                    CONFIRMER MON COMPTE
-                </Text>
-            </TouchableOpacity>
+                    <Text
+                        style={{
+                            fontFamily: "SF-Semibold",
+                            color: colors.WHITE,
+                            fontSize: 15,
+                        }}
+                    >
+                        CONFIRMER MON COMPTE
+                    </Text>
+                </TouchableOpacity>
+            )}
 
         </View>
     </SafeAreaView>
