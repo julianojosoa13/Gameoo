@@ -222,7 +222,7 @@ const Register = () => {
                 )}
                 
             </View>
-            <Text style={{textAlign: "center", marginTop: 10, color: colors.WHITE}}>OU {'\n'}UTILISER</Text>
+            <Text style={{textAlign: "center", marginTop: 20, color: colors.WHITE}}>OU</Text>
 
             <View
                 style={{
@@ -230,11 +230,15 @@ const Register = () => {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    marginBottom: 38
+                    marginBottom: 38,
+                    backgroundColor: colors.SEMI_TRANSPARENT,
+                    marginTop: 20,
+                    paddingVertical: 15,
+                    borderRadius: 25
                 }}
             >
                 <TouchableOpacity>
-                    <FontAwesome name="facebook-square" size={40} color="blue" />
+                    <FontAwesome name="facebook-square" size={40} color={colors.FACEBOOK_BLUE} />
                 </TouchableOpacity>
 
                 <TouchableOpacity>

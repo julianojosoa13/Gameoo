@@ -11,7 +11,8 @@ import {
     useWindowDimensions, 
     Alert,
     AppState,
-    ActivityIndicator
+    ActivityIndicator,
+    Keyboard
 } from 'react-native'
 
 import React, { useState } from 'react'
@@ -41,6 +42,7 @@ const Login = () => {
   const signInWithEmail = async () => {
     if(email.trim() === "" || password === "") return
     setLoading(true)
+    Keyboard.dismiss()
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -221,7 +223,7 @@ const Login = () => {
                 
             </View>
 
-            <Text style={{textAlign: "center", marginTop: 10,color: colors.WHITE}}>OU</Text>
+            
             <Pressable
                 style={{
                     alignSelf: "center"
@@ -234,34 +236,30 @@ const Login = () => {
                         color: colors.MAIN_COLOR,
                         fontFamily: "SF-Semibold",
                         fontSize: 16,
+                        marginTop: 20
                     }}
                 >
                     CREER UN COMPTE
                 </Text>
             </Pressable>
 
-            <Text
-                style={{
-                    marginHorizontal: 52,
-                    marginTop: 10,
-                    fontFamily: "SF-Thin",
-                    fontSize: 16,
-                    color: colors.WHITE
-                }}
-            >
-                Vous préferez utiliser:
-            </Text>
+            <Text style={{textAlign: "center", marginTop: 10,color: colors.WHITE}}>OU</Text>
+            
             <View
                 style={{
                     marginHorizontal: 32,
                     flexDirection: "row",
                     justifyContent: "space-around",
-                    alignItems: "center",
-                    marginBottom: 38
+                    marginBottom: 20,
+                    backgroundColor: colors.SEMI_TRANSPARENT,
+                    paddingVertical: 25,
+                    borderRadius: 25,
+                    marginTop: 20,
                 }}
             >
+                
                 <TouchableOpacity>
-                    <FontAwesome name="facebook-square" size={40} color="blue" />
+                    <FontAwesome name="facebook-square" size={40} color={colors.FACEBOOK_BLUE} />
                 </TouchableOpacity>
 
                 <TouchableOpacity>

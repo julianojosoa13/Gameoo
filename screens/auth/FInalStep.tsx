@@ -110,7 +110,7 @@ const FinalStep = () => {
                         style={{flexDirection: "row",alignItems: "center"}}
                     >
                         <Text
-                            style={{
+                            style={{    
                                 fontFamily: "SF-Semibold",
                                 color: colors.WHITE,
                                 fontSize: 15,
