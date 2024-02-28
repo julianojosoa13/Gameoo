@@ -26,8 +26,7 @@ const Register = () => {
         <Image source={require("../../assets/branding/LOGO-Gameoo-symbole-PNG.png")} style={{marginLeft: 10, marginTop: 75, width: 100, height: 100}}/>
         <View
             style={{
-                opacity: 0.87,
-                backgroundColor: colors.WHITE_ALT,
+                backgroundColor: colors.SEMI_TRANSPARENT,
                 position: "absolute",
                 bottom: 0,
                 left: 0,
@@ -35,6 +34,7 @@ const Register = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
+                justifyContent: "space-around",
 
                 elevation: 2
             }}
@@ -85,7 +85,7 @@ const Register = () => {
                 <View
                     style={{marginHorizontal: 20, marginBottom: 15}}
                 >
-                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin"}}>Identifiant</Text>
+                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin", color: colors.WHITE}}>Identifiant</Text>
                     <View
                         style={{
                             width: "100%",
@@ -103,7 +103,7 @@ const Register = () => {
                 <View
                     style={{marginHorizontal: 20, marginBottom: 15}}
                 >
-                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin"}}>Mot de passe</Text>
+                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin", color: colors.WHITE}}>Mot de passe</Text>
                     <View
                         style={{
                             width: "100%",
@@ -119,7 +119,7 @@ const Register = () => {
                 <View
                     style={{marginHorizontal: 20, marginBottom: 15}}
                 >
-                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin"}}>Confirmer mot de passe</Text>
+                    <Text style={{marginLeft: 8,fontFamily: "SF-Thin", color: colors.WHITE}}>Confirmer mot de passe</Text>
                     <View
                         style={{
                             width: "100%",
@@ -156,8 +156,8 @@ const Register = () => {
                         ENREGISTRER
                     </Text>
                 </TouchableOpacity>
-                <Text style={{textAlign: "center", marginTop: 10}}>OU {'\n'}UTILISER</Text>
             </View>
+            <Text style={{textAlign: "center", marginTop: 10, color: colors.WHITE}}>OU {'\n'}UTILISER</Text>
 
             <View
                 style={{
@@ -165,20 +165,16 @@ const Register = () => {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    marginTop: 20
+                    marginBottom: 38
                 }}
             >
                 <TouchableOpacity>
-                    <FontAwesome name="facebook-square" size={40} color="black" />
+                    <FontAwesome name="facebook-square" size={40} color="blue" />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <FontAwesome name="google" size={40} color="black" />
+                    <FontAwesome name="google" size={40} color="orange" />
                 </TouchableOpacity>
-
-                {/* <TouchableOpacity>
-                    <FontAwesome name="instagram" size={40} color="black" />
-                </TouchableOpacity> */}
 
             </View>
         </View>

@@ -27,7 +27,6 @@ const Login = () => {
         <Image source={require("../../assets/branding/LOGO-Gameoo-symbole-PNG.png")} style={{marginLeft: 10, marginTop: 75, width: 100, height: 100}}/>
         <View
             style={{
-                opacity: 0.87,
                 backgroundColor: colors.SEMI_TRANSPARENT,
                 position: "absolute",
                 bottom: 0,
@@ -36,6 +35,7 @@ const Login = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
+                justifyContent: "space-around",
 
                 elevation: 2
             }}
@@ -140,25 +140,27 @@ const Login = () => {
                         CONNEXION
                     </Text>
                 </TouchableOpacity>
-                <Text style={{textAlign: "center", marginTop: 10,color: colors.WHITE}}>OU</Text>
-                <Pressable
-                    style={{
-                        alignSelf: "center"
-                    }}
-                    hitSlop={2}
-                    onPress={() => navigation.navigate("Register")}
-                >
-                    <Text
-                        style={{
-                            color: colors.MAIN_COLOR,
-                            fontFamily: "SF-Semibold",
-                            fontSize: 13,
-                        }}
-                    >
-                        CREER UN COMPTE
-                    </Text>
-                </Pressable>
+                
             </View>
+
+            <Text style={{textAlign: "center", marginTop: 10,color: colors.WHITE}}>OU</Text>
+            <Pressable
+                style={{
+                    alignSelf: "center"
+                }}
+                hitSlop={2}
+                onPress={() => navigation.navigate("Register")}
+            >
+                <Text
+                    style={{
+                        color: colors.MAIN_COLOR,
+                        fontFamily: "SF-Semibold",
+                        fontSize: 16,
+                    }}
+                >
+                    CREER UN COMPTE
+                </Text>
+            </Pressable>
 
             <Text
                 style={{
@@ -177,7 +179,7 @@ const Login = () => {
                     flexDirection: "row",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    marginTop: 20
+                    marginBottom: 38
                 }}
             >
                 <TouchableOpacity>
@@ -187,10 +189,6 @@ const Login = () => {
                 <TouchableOpacity>
                     <FontAwesome name="google" size={40} color="orange" />
                 </TouchableOpacity>
-
-                {/* <TouchableOpacity>
-                    <FontAwesome name="instagram" size={40} color="black" />
-                </TouchableOpacity> */}
 
             </View>
         </View>

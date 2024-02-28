@@ -2,6 +2,7 @@ import { ImageBackground, Image, SafeAreaView, StyleSheet, Text, View, useWindow
 import React from 'react'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
+import LottieView from 'lottie-react-native'
 
 
 const Onboarding = () => {
@@ -11,18 +12,26 @@ const Onboarding = () => {
   return (
     <SafeAreaView style={{flex:1}}>
         <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
-        <Image source={require("../../assets/branding/LOGO-Gameoo-symbole-PNG.png")} style={{marginLeft: 10, marginTop: 75, width: 100, height: 100}}/>
         <View
             style={{
-                opacity: 0.87,
+                marginTop: "30%",
+                justifyContent: "center",
+                alignItems: "center"
+            }}
+        >
+            <LottieView source={require('../../assets/Animations/Lotties/controller.json')} autoPlay loop style={{width: 150, height: 150}}/>
+        </View>
+        <View
+            style={{
                 backgroundColor: colors.SEMI_TRANSPARENT,
                 position: "absolute",
                 bottom: 0,
                 left: 0,
                 height: "65%",
                 width: "100%",
-                borderTopRightRadius: 35,
-                borderTopLeftRadius: 35,
+                borderTopRightRadius: 45,
+                borderTopLeftRadius: 45,
+                justifyContent: "space-around",
 
                 elevation: 2
             }}
@@ -54,7 +63,7 @@ const Onboarding = () => {
             >
                 <Text
                     style={{
-                        fontFamily: "SF-Thin",
+                        fontFamily: "SF-Regular",
                         fontSize: 28,
                         maxWidth: "55%",
                         textAlign: "center",
@@ -75,15 +84,15 @@ const Onboarding = () => {
                 </Text>
                 <Text
                     style={{
-                        fontSize: 17,
-                        fontFamily: "SF-Regular",
+                        fontSize: 20,
+                        fontFamily: "SF-Thin",
                         color: colors.WHITE,
                         textAlign: "center",
                         marginHorizontal: 20,
                         marginTop: 30,
                         fontWeight: "300",
-                        maxWidth: "70%",
-                        lineHeight: 18
+                        maxWidth: "85%",
+                        lineHeight: 28
                     }}
                 >
                     Jouez à nos jeux et recevez des récompenses inédites!
@@ -100,7 +109,7 @@ const Onboarding = () => {
             >
                 <TouchableOpacity
                     style={{
-                        backgroundColor: colors.GREEN,
+                        backgroundColor: "orange",
                         width: "80%",
                         justifyContent: "center",
                         alignItems: "center",

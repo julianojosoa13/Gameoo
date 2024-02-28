@@ -28,8 +28,7 @@ const FInalStep = () => {
         <Image source={require("../../assets/branding/LOGO-Gameoo-symbole-PNG.png")} style={{marginLeft: 10, marginTop: 75, width: 100, height: 100}}/>
         <View
             style={{
-                opacity: 0.87,
-                backgroundColor: colors.WHITE_ALT,
+                backgroundColor: colors.SEMI_TRANSPARENT,
                 position: "absolute",
                 bottom: 0,
                 left: 0,
@@ -37,6 +36,7 @@ const FInalStep = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
+                justifyContent: "space-around",
 
                 elevation: 2
             }}
@@ -86,16 +86,16 @@ const FInalStep = () => {
                         textAlign: "center",
                         marginTop: 20,
                         fontSize: 17,
-                        color: colors.ACCENT_COLOR,
+                        color: colors.WHITE,
                         fontFamily: "SF-Regular"
                     }}
                 >
-                    Choisissez un Identifiant unique
+                    Choisissez votre nom de Gamer
                 </Text>
                 <View
                     style={{
                         width: "75%",
-                        backgroundColor: colors.WHITE,
+                        backgroundColor: colors.LIGHT_GREY,
                         marginTop: 15,
                         padding: 8,
                         borderRadius: 20,

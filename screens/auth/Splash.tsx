@@ -20,7 +20,7 @@ const Splash = () => {
             alignItems: "center",
         }}
       >
-        <LottieView source={require('../../assets/Animations/Lotties/loading-walk.json')} autoPlay loop style={{width: 120, height: 120}}/>
+        <LottieView source={require('../../assets/Animations/Lotties/gaming.json')} autoPlay loop style={{width: 200, height: 200}}/>
         <Text style={{fontFamily: "SF-Regular", textAlign: "center", fontSize: 18, marginBottom: 25}}>Gameoo, tous droits réservés, {new Date().getFullYear()}</Text>
       </View>
     </SafeAreaView>
