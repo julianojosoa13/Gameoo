@@ -144,7 +144,7 @@ const Onboarding = () => {
                             fontSize: 13,
                         }}
                     >
-                        PASSER
+                        JOUER (PASSER)
                     </Text>
                 </Pressable>
 

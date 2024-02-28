@@ -10,10 +10,11 @@ import {
     View, 
     useWindowDimensions, 
     Alert,
-    AppState
+    AppState,
+    ActivityIndicator
 } from 'react-native'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import { supabase } from '../../supabase/supabase'
 import { colors } from '../../utils/colors'
@@ -29,9 +30,32 @@ AppState.addEventListener('change', (state) => {
   })
 
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
+
+  const signInWithEmail = async () => {
+    if(email.trim() === "" || password === "") return
+    setLoading(true)
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+
+    if (error) {
+        if(error.message === "Email not confirmed") {
+            // Alert.alert("Login","Veuillez confirmez votre adresse email!")
+            navigation.navigate("OTPVerif", {email: email})
+        } else {
+            Alert.alert("Login","Nom d'utilisateur ou mot de passe incorrect!")
+            console.log(error.message)
+        }
+    }
+    setLoading(false)
+  }
   
   return (
     <SafeAreaView style={{flex:1}}>
@@ -118,10 +142,14 @@ const Login = () => {
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 5,
                             padding: 8,
-                            borderRadius: 20
+                            borderRadius: 20,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "flex-start"
                         }}
                     >
-                        <TextInput placeholder="Email ou nom d'utilisateur" style={{width: "100%", fontFamily: "SF-Regular"}}/>
+                        <FontAwesome6 name="user" size={20} color="grey" style={{marginHorizontal: 15}}/>
+                        <TextInput placeholder="Email ou nom d'utilisateur" style={{width: "100%", fontFamily: "SF-Regular"}} onChangeText={(text) => setEmail(text)} autoCapitalize={"none"}/>
                     </View>
                 </View>
 
@@ -135,35 +163,43 @@ const Login = () => {
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 5,
                             padding: 8,
-                            borderRadius: 20
+                            borderRadius: 20,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "flex-start"
                         }}
                     >
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular"}} secureTextEntry={true}/>
+                        <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
+                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular"}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
                     </View>
                 </View>
-
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: colors.GREEN,
-                        width: "80%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: 10,
-                        borderRadius: 10,
-                        marginTop: 5,
-                        alignSelf: "center"
-                    }}
-                >
-                    <Text
+                {loading ? (
+                    <ActivityIndicator color={colors.MAIN_COLOR} size={"large"}/>
+                ) : (
+                    <TouchableOpacity
                         style={{
-                            fontFamily: "SF-Semibold",
-                            color: colors.WHITE,
-                            fontSize: 15,
+                            backgroundColor: colors.ORANGE,
+                            width: "80%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            padding: 10,
+                            borderRadius: 10,
+                            marginTop: 5,
+                            alignSelf: "center"
                         }}
+                        onPress={() => signInWithEmail()}
                     >
-                        CONNEXION
-                    </Text>
-                </TouchableOpacity>
+                        <Text
+                            style={{
+                                fontFamily: "SF-Semibold",
+                                color: colors.WHITE,
+                                fontSize: 15,
+                            }}
+                        >
+                            CONNEXION
+                        </Text>
+                    </TouchableOpacity>
+                )}
                 
             </View>
 

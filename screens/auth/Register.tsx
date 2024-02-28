@@ -1,13 +1,54 @@
-import { Image, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import React from 'react'
+import { ActivityIndicator, Alert, AppState, Image, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import React, { useState } from 'react'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
-import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
+import { AntDesign, Feather, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
+import { supabase } from '../../supabase/supabase';
+
+AppState.addEventListener('change', (state) => {
+    if (state === 'active') {
+      supabase.auth.startAutoRefresh()
+    } else {
+      supabase.auth.stopAutoRefresh()
+    }
+  })
 
 const Register = () => {
   const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const signUpWithEmail = async () => {
+    if(email.trim() === "" || password === "" || confirmPassword === "") {
+        Alert.alert("Auth","Veuillez remplir tous les champs!")
+        return
+    }
+
+    if(password !== confirmPassword) {
+        Alert.alert("Auth", "La confirmation du mot de passe ne concorde pas!")
+        return
+    }
+    setLoading(true)
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+
+    if (error) Alert.alert(error.message)
+    if (!session) {
+        Alert.alert('Auth', 'Vérifiez votre compte en entrant le code envoyé dans votre boîte Email ou en cliquant sur le lien!')
+        navigation.replace("OTPVerif", {email: email})
+    }
+    setLoading(false)
+  }
   
   return (
     <SafeAreaView style={{flex:1}}>
@@ -94,9 +135,13 @@ const Register = () => {
                             padding: 6,
                             borderRadius: 10,
                             elevation: 1,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "flex-start"
                         }}
                     >
-                        <TextInput placeholder="Email ou nom d'utilisateur" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}}/>
+                        <Feather name="mail" size={20} color="grey" style={{marginHorizontal: 15}}/>
+                        <TextInput autoCapitalize={"none"} placeholder="Adresse email" keyboardType="email-address" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} onChangeText={(text) => setEmail(text)}/>
                     </View>
                 </View>
 
@@ -110,10 +155,14 @@ const Register = () => {
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
                             padding: 6,
-                            borderRadius: 10
+                            borderRadius: 10,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "flex-start"
                         }}
                     >
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true}/>
+                        <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
+                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
                     </View>
                 </View>
                 <View
@@ -126,36 +175,44 @@ const Register = () => {
                             backgroundColor: colors.LIGHT_GREY,
                             marginTop: 2,
                             padding: 6,
-                            borderRadius: 10
+                            borderRadius: 10,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "flex-start"
                         }}
                     >
-                        <TextInput placeholder="Mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true}/>
+                        <FontAwesome6 name="lock" size={20} color="grey" style={{marginHorizontal: 15}}/>
+                        <TextInput placeholder="Confirmer le mot de passe" style={{width: "100%", fontFamily: "SF-Regular", marginLeft: 8}} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)}/>
                     </View>
                 </View>
-
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: colors.GREEN,
-                        width: "80%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: 10,
-                        borderRadius: 10,
-                        marginTop: 5,
-                        alignSelf: "center"
-                    }}
-                    onPress={() => navigation.navigate("FinalStep")}
-                >
-                    <Text
+                {loading? (
+                    <ActivityIndicator size={"large"} color={"purple"}/>
+                ):(
+                    <TouchableOpacity
                         style={{
-                            fontFamily: "SF-Semibold",
-                            color: colors.WHITE,
-                            fontSize: 12,
+                            backgroundColor: colors.ORANGE,
+                            width: "80%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            padding: 10,
+                            borderRadius: 10,
+                            marginTop: 5,
+                            alignSelf: "center"
                         }}
+                        onPress={() => signUpWithEmail()}
                     >
-                        ENREGISTRER
-                    </Text>
-                </TouchableOpacity>
+                        <Text
+                            style={{
+                                fontFamily: "SF-Semibold",
+                                color: colors.WHITE,
+                                fontSize: 12,
+                            }}
+                        >
+                            ENREGISTRER
+                        </Text>
+                    </TouchableOpacity>
+                )}
+                
             </View>
             <Text style={{textAlign: "center", marginTop: 10, color: colors.WHITE}}>OU {'\n'}UTILISER</Text>
 
