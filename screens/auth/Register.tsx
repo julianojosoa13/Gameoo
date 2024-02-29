@@ -101,6 +101,7 @@ const Register = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
+                justifyContent: "space-between",
 
                 elevation: 2
             }}
@@ -215,13 +216,12 @@ const Register = () => {
                     <TouchableOpacity
                         style={{
                             backgroundColor: colors.ORANGE,
-                            width: "80%",
                             justifyContent: "center",
                             alignItems: "center",
                             padding: 10,
                             borderRadius: 10,
-                            marginTop: 5,
-                            alignSelf: "center"
+                            marginTop: 20,
+                            marginHorizontal: 18
                         }}
                         onPress={() => signUpWithEmail()}
                     >
@@ -238,7 +238,7 @@ const Register = () => {
                 )}
                 
             </View>
-            <Text style={{textAlign: "center", marginTop: 10, color: colors.WHITE}}>OU</Text>
+            <View style={{marginTop: 20,backgroundColor: colors.WHITE, height: 3, width: 50, alignSelf: "center"}} />
 
             <View
                 style={{
@@ -248,7 +248,7 @@ const Register = () => {
                     alignItems: "center",
                     marginBottom: 38,
                     backgroundColor: colors.SEMI_TRANSPARENT,
-                    marginTop: 10,
+                    marginTop: 20,
                     paddingVertical: 10,
                     borderRadius: 25
                 }}

@@ -76,7 +76,6 @@ const Login = () => {
            
         }
     }
-    console.log(data)
     setLoading(false)
   }
   
@@ -106,7 +105,7 @@ const Login = () => {
                 width: "100%",
                 borderTopRightRadius: 35,
                 borderTopLeftRadius: 35,
-
+                justifyContent: 'space-between',
                 elevation: 2
             }}
         >
@@ -199,13 +198,12 @@ const Login = () => {
                     <TouchableOpacity
                         style={{
                             backgroundColor: colors.ORANGE,
-                            width: "80%",
                             justifyContent: "center",
                             alignItems: "center",
                             padding: 10,
                             borderRadius: 10,
-                            marginTop: 5,
-                            alignSelf: "center"
+                            marginTop: 20,
+                            marginHorizontal: 20
                         }}
                         onPress={() => signInWithEmail()}
                     >
@@ -222,28 +220,31 @@ const Login = () => {
                 )}
                 
             </View>
-
             
-            <Pressable
+            <Text
                 style={{
-                    alignSelf: "center"
+                    fontFamily: "SF-Regular",
+                    color: colors.WHITE,
+                    alignSelf: "center",
+                    marginTop: 15,
+                    fontSize: 12
                 }}
-                hitSlop={2}
-                onPress={() => navigation.navigate("Register")}
             >
+                PAS ENCORE DE COMPTE? {' '}
+                
                 <Text
                     style={{
-                        color: colors.MAIN_COLOR,
-                        fontFamily: "SF-Semibold",
-                        fontSize: 16,
+                        color: colors.ORANGE,
+                        fontFamily: "SF-Regular",
+                        fontSize: 14,
                         marginTop: 10
                     }}
+                    onPress={() => navigation.navigate("Register")}
                 >
-                    CREER UN COMPTE
+                    CREER
                 </Text>
-            </Pressable>
-
-            <Text style={{textAlign: "center", marginTop: 10,color: colors.WHITE}}>OU</Text>
+            </Text>            
+            <View style={{marginTop: 10,backgroundColor: colors.WHITE, height: 3, width: 50, alignSelf: "center"}} />
             
             <View
                 style={{

@@ -87,25 +87,15 @@ const OTPVerification = () => {
                         input?.current?.clear()
                     })
                     setCodeList(Array(6).fill(''))
+                    Dialog.hide()
                     await resendCode()
 
-                    Dialog.hide()
                 }
             })
         }
         setLoading(false)
         return
     }
-    Dialog.show({
-        type: ALERT_TYPE.SUCCESS,
-        title: 'Verification',
-        textBody: 'Votre adresse email a bien été vérifié!',
-        button: 'Fermer',
-        onPressButton: async () => {
-            console.log(session)
-            Dialog.hide()
-        }
-    })
         
     setLoading(false)
   }

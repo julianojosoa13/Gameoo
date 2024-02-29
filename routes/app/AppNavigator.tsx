@@ -1,12 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FinalStep from '../../screens/auth/FinalStep';
+import FirstStep from '../../screens/app/FirstStep';
 import { Session } from '@supabase/supabase-js';
+import BottomTabNavigator from './BottomTabNavigator/BottomTabNavigator';
+import { UserContext } from '../../utils/contexts/UserContext';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = ({ session }: { session: Session | null }) => {
+  const {setUserSession} = useContext(UserContext)
+
+  if (session && session.user) setUserSession(session)
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -15,13 +21,15 @@ const AppNavigator = ({ session }: { session: Session | null }) => {
     >
       {session && session.user ? (
         <>
-          <Stack.Screen name='FinalStep' component={FinalStep} />
+          <Stack.Screen name='FirstStep' component={FirstStep} />
         </>
       ) : (
         <>
-          <Stack.Screen name='FinalStep' component={FinalStep} />
+          <Stack.Screen name='FirstStep' component={FirstStep} />
         </>
       )}
+
+      <Stack.Screen name="Tabs" component={BottomTabNavigator} />
     </Stack.Navigator>
   )
 }

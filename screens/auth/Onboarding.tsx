@@ -35,7 +35,7 @@ const Onboarding = () => {
         textBody: 'Vous pouvez utiliser Gameoo sans créer de compte! Néanmoins, vous devez être authentifié pour réclamer vos Recompenses!',
         button: 'Compris',
         onPressButton: () => {
-            console.log("got to app")
+            navigation.navigate("AppNavigator",{screen: "Tabs"})
             Dialog.hide()
         }
     })

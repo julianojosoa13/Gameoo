@@ -1,5 +1,5 @@
 import { ActivityIndicator, Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import LottieView from 'lottie-react-native'
@@ -7,18 +7,24 @@ import { FontAwesome6 } from '@expo/vector-icons'
 import { supabase } from '../../supabase/supabase'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ALERT_TYPE, Dialog, Toast } from 'react-native-alert-notification'
+import { UserContext } from '../../utils/contexts/UserContext'
 
-const FinalStep = () => {
+const FirstStep = () => {
   const navigation = useNavigation()
   const {width, height} = useWindowDimensions()
   const bwLogoWidth = width * 0.25
   const [userTag, setUserTag] = useState("")
   const [loading, setLoading] = useState(false)
+  const [checking, setChecking] = useState(true)
+  const [changedUserTag, setChangedUserTag] = useState(false)
+  
+  const {TagToContext} = useContext(UserContext)
 
   
   const setGamerTag = async () => {
     setLoading(true)
     const isValidTag = /^[a-zA-Z0-9]+$/.test(userTag);
+
     if(userTag.trim() === "" || !isValidTag || !userTag || userTag === "") {
         Dialog.show({
             type: ALERT_TYPE.WARNING,
@@ -53,15 +59,16 @@ const FinalStep = () => {
         return;
     }
     setLoading(false)
-    console.log('Gamer tag set successfully');
-    supabase.auth.signOut()
+    setChangedUserTag(true)
+    navigation.replace("Tabs", {screen: "Home", params : {userTag}})
   }
 
   const checkGamerTag = async () => {
+    setChecking(true)
     const res = await supabase.auth.getUser();
-
     if (!res.data) {
         console.error('User is not authenticated');
+        setChecking(false)
         return;
     }
 
@@ -72,34 +79,58 @@ const FinalStep = () => {
         .select('gamertag')
         .eq('user_id', userId);
 
-        if (error) {
+    if (error) {
         console.error('Error fetching gamerTag:', error.message);
         return;
-        }
+    }
+    setChecking(false)
 
-        const gamerTag = data[0]?.gamertag;
-        if(!gamerTag) {
-            Dialog.show({
-                type: ALERT_TYPE.SUCCESS,
-                title: "Gameoo",
-                textBody: "Bienvenue dans GAMEOO!\nChoisissez votre Gamer TAG!",
-                button: "Ok"
-            })
-        } else {
-            Dialog.show({
-                type: ALERT_TYPE.SUCCESS,
-                title: "Gameoo",
-                textBody: "Bienvenue dans GAMEOO!\n\n" + gamerTag,
-                button: "Ok",
-            })
-        }
+    const gamerTag = data[0]?.gamertag;
+    if(!gamerTag) {
+        Dialog.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: "Gameoo",
+            textBody: "Bienvenue dans GAMEOO!\nChoisissez votre Gamer TAG!",
+            button: "Ok"
+        })
+    } else {
+        setUserTag(gamerTag)
+        
+        navigation.replace("Tabs", {screen: "Home", params: {gamerTag}})
+        
+        Dialog.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: "Gameoo",
+            textBody: "Bienvenue dans GAMEOO!\n\n" + gamerTag,
+            button: "Ok",
+        })
+    }
   }
 
   useEffect(()=>{
     checkGamerTag()
   }, [])
 
-  return (
+  if(checking || changedUserTag) {
+    return (
+        <View
+            style={{flex:1, alignItems: "center", justifyContent:"center"}}
+        >
+            <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
+            <View
+                style={{
+                    marginTop: "30%",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}
+            >
+                <LottieView source={require('../../assets/Animations/Lotties/controller.json')} autoPlay loop style={{width: 150, height: 150}}/>
+            </View>
+        </View>
+    )
+  }
+
+  if (!changedUserTag) return (
     <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
       <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
         
@@ -224,6 +255,6 @@ const FinalStep = () => {
   )
 }
 
-export default FinalStep
+export default FirstStep
 
 const styles = StyleSheet.create({})

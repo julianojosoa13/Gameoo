@@ -6,8 +6,9 @@ import Onboarding from '../../screens/auth/Onboarding';
 import Login from '../../screens/auth/Login';
 import Splash from '../../screens/auth/Splash';
 import Register from '../../screens/auth/Register';
-import FInalStep from '../../screens/auth/FinalStep';
+import FInalStep from '../../screens/app/FirstStep';
 import OTPVerification from '../../screens/auth/OTPVerification';
+import AppNavigator from '../app/AppNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const AuthNavigator = () => {
       <Stack.Screen name='Register' component={Register} />
       <Stack.Screen name='FinalStep' component={FInalStep} />
       <Stack.Screen name="OTPVerif" component={OTPVerification} />
+      <Stack.Screen name="AppNavigator" component={AppNavigator} />
     </Stack.Navigator>
   )
 }

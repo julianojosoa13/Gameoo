@@ -1,16 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './routes/auth/AuthNavigator';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase/supabase';
 import AppNavigator from './routes/app/AppNavigator';
+import { UserContext, UserProvider } from './utils/contexts/UserContext';
 
 
 export default function App() {
+
   const [fontsLoaded] = useFonts({
     "Modak": require("./assets/Fonts/Modak-PLKE.ttf"),
     "SF-Thin": require("./assets/Fonts/SF-Pro-Display-Thin.otf"),
@@ -42,10 +44,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <AlertNotificationRoot>
-        <StatusBar />
-        {
-          session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
-        }
+        <UserProvider>
+          <StatusBar />
+          {
+            session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
+          }
+        </UserProvider>
       </AlertNotificationRoot>
     </NavigationContainer>
   );
