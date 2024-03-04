@@ -8,7 +8,6 @@ import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase/supabase';
 import AppNavigator from './routes/app/AppNavigator';
-import { UserContext, UserProvider } from './utils/contexts/UserContext';
 
 
 export default function App() {
@@ -44,12 +43,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <AlertNotificationRoot>
-        <UserProvider>
           <StatusBar />
           {
             session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
           }
-        </UserProvider>
       </AlertNotificationRoot>
     </NavigationContainer>
   );

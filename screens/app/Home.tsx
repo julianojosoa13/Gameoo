@@ -1,12 +1,11 @@
 import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import React, { useContext } from 'react'
+import React from 'react'
 import AvatarBox from '../../components/AvatarBox'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { supabase } from '../../supabase/supabase'
 import WhiteCard from '../../components/WhiteCard'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { UserContext } from '../../utils/contexts/UserContext'
 
 const Home = () => {
   const {width, height} = useWindowDimensions()
@@ -15,7 +14,7 @@ const Home = () => {
   const {gamerTag} = route?.params || ""
   console.log("route:>> ", route.params)
 
-  const {session} = useContext(UserContext)
+  const session = null
   
   return (
     <SafeAreaView 

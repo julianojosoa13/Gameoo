@@ -1,5 +1,5 @@
 import { ActivityIndicator, Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { colors } from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native'
 import LottieView from 'lottie-react-native'
@@ -7,7 +7,6 @@ import { FontAwesome6 } from '@expo/vector-icons'
 import { supabase } from '../../supabase/supabase'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ALERT_TYPE, Dialog, Toast } from 'react-native-alert-notification'
-import { UserContext } from '../../utils/contexts/UserContext'
 
 const FirstStep = () => {
   const navigation = useNavigation()
@@ -17,8 +16,6 @@ const FirstStep = () => {
   const [loading, setLoading] = useState(false)
   const [checking, setChecking] = useState(true)
   const [changedUserTag, setChangedUserTag] = useState(false)
-  
-  const {TagToContext} = useContext(UserContext)
 
   
   const setGamerTag = async () => {
@@ -76,7 +73,7 @@ const FirstStep = () => {
 
     const { data, error } = await supabase
         .from('UserProfile')
-        .select('gamertag')
+        .select('gamertag, welcomed')
         .eq('user_id', userId);
 
     if (error) {
@@ -86,6 +83,7 @@ const FirstStep = () => {
     setChecking(false)
 
     const gamerTag = data[0]?.gamertag;
+    const welcomed = data[0]?.welcomed
     if(!gamerTag) {
         Dialog.show({
             type: ALERT_TYPE.SUCCESS,
@@ -98,13 +96,20 @@ const FirstStep = () => {
         
         navigation.replace("Tabs", {screen: "Home", params: {gamerTag}})
         
-        Dialog.show({
-            type: ALERT_TYPE.SUCCESS,
-            title: "Gameoo",
-            textBody: "Bienvenue dans GAMEOO!\n\n" + gamerTag,
-            button: "Ok",
-        })
-    }
+        if(!welcomed) {
+            Dialog.show({
+                type: ALERT_TYPE.SUCCESS,
+                title: "Gameoo",
+                textBody: "Bienvenue dans GAMEOO!\n\n" + gamerTag,
+                button: "Ok",
+            })
+
+            const { error } = await supabase
+                .from('UserProfile')
+                .update({ welcomed: true }, { returning: 'minimal' })
+                .eq('user_id', userId);
+        }
+        }
   }
 
   useEffect(()=>{

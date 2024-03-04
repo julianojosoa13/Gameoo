@@ -4,14 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FirstStep from '../../screens/app/FirstStep';
 import { Session } from '@supabase/supabase-js';
 import BottomTabNavigator from './BottomTabNavigator/BottomTabNavigator';
-import { UserContext } from '../../utils/contexts/UserContext';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = ({ session }: { session: Session | null }) => {
-  const {setUserSession} = useContext(UserContext)
-
-  if (session && session.user) setUserSession(session)
 
   return (
     <Stack.Navigator
