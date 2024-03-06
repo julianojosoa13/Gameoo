@@ -7,7 +7,7 @@ const ConsecutiveDays = () => {
     <View
         style={{
             padding: 10,
-            backgroundColor: 'rgba(255,255,255,0.5)',
+            backgroundColor: colors.SEMI_WHITE,
             margin: 15,
             borderRadius: 15
         }}
@@ -24,7 +24,7 @@ const ConsecutiveDays = () => {
       <Text
         style={{
             marginLeft: 8,
-            color: colors.GREEN,
+            color: colors.SEMI_TRANSPARENT,
             fontFamily: "SF-Semibold",
             fontSize: 32
         }}

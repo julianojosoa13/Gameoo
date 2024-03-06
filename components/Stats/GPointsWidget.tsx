@@ -6,20 +6,31 @@ const GPointsWidget = () => {
   return (
     <View
      style={{
-       
-        flexDirection: "row"
+        backgroundColor: colors.SEMI_WHITE,
+        borderColor: colors.WHITE,
+        borderWidth: 2,
+        flexDirection: "row",
+        borderRadius: 8,
+        marginVertical: 20
      }}
     >
       <View
         style={{
-            backgroundColor: "rgba(255,255,255,0.2)",
-            maxWidth: 60,
+            // backgroundColor: "rgba(255,255,255,0.2)",
+            maxWidth: 100,
             justifyContent: "center",
             alignItems: "center",
-            marginVertical: 20
         }}
       >
-        <Text>
+        <Text 
+            style={{
+                textAlign: "center",
+                marginHorizontal: 10,
+                color: "teal",
+                fontFamily: "SF-Semibold",
+                fontSize: 18
+            }}
+        >
             Mes GPoints
         </Text>
       </View>
@@ -27,14 +38,13 @@ const GPointsWidget = () => {
         style={{
             padding: 10,
             marginVertical: 10,
-            borderRadius: 8,
-            backgroundColor: colors.WHITE,
+            borderColor: "red",
         }}
       >
         <View
             style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}
         >
-            <Text style={{fontSize: 15, color: colors.FACE15OK_BLUE, fontWeight: "bold"}}>125 {" "}</Text>
+            <Text style={{fontSize: 15, color: colors.FACEBOOK_BLUE, fontWeight: "bold"}}>125 {" "}</Text>
             <Image source={require('../../assets/Gems/blue.png')} style={{width: 30, height: 30}}/>
         </View>
 

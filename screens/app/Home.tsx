@@ -19,6 +19,9 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import ThreeBarMenu from '../../components/ThreeBarMenu/ThreeBarMenu'
 import ConsecutiveDays from '../../components/Stats/ConsecutiveDays'
 import GPointsWidget from '../../components/Stats/GPointsWidget'
+import OpenedChests from '../../components/Stats/OpenedChests'
+import { colors } from '../../utils/colors'
+import GameCard from '../../components/GameCard'
 
 const Home = () => {
   const {width, height} = useWindowDimensions()
@@ -75,12 +78,15 @@ const Home = () => {
         </View>
               
         <WhiteCard title='Mes stats'>
-          <View style={{flexDirection: "row"}}>
-            <ConsecutiveDays />
-            <GPointsWidget />
+          <View style={{flexDirection: "row", justifyContent: "space-around"}}>
+            <ConsecutiveDays />   
+            <OpenedChests />
           </View>
-          
+          <Text style={{fontFamily: "SF-Semibold", color: colors.WHITE, marginLeft: 24}}>Dernier jeu: </Text>
+          <View style={{borderBottomWidth: 4, borderBottomColor: colors.WHITE_ALT, width: 30, marginLeft: 28}}/>
+          <GameCard />
         </WhiteCard>
+
         <WhiteCard title='Jeux Populaires'>
 
         </WhiteCard>
