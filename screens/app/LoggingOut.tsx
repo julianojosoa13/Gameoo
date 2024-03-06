@@ -16,7 +16,7 @@ const LoggingOut = () => {
         setTimeout(async ()=>{
             if(!user) navigation.navigate("Onboarding")
             else supabase.auth.signOut()
-        }, 2500)
+        }, 3500)
     }
     
     signOut()
