@@ -17,6 +17,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 import ThreeBarMenu from '../../components/ThreeBarMenu/ThreeBarMenu'
+import ConsecutiveDays from '../../components/Stats/ConsecutiveDays'
+import GPointsWidget from '../../components/Stats/GPointsWidget'
 
 const Home = () => {
   const {width, height} = useWindowDimensions()
@@ -72,12 +74,21 @@ const Home = () => {
 
         </View>
               
+        <WhiteCard title='Mes stats'>
+          <View style={{flexDirection: "row"}}>
+            <ConsecutiveDays />
+            <GPointsWidget />
+          </View>
+          
+        </WhiteCard>
         <WhiteCard title='Jeux Populaires'>
 
         </WhiteCard>
+
         <WhiteCard title='Meilleurs cadeaux du moment'>
           
         </WhiteCard>
+
       </KeyboardAwareScrollView>
     </SafeAreaView>
   )

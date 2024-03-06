@@ -13,7 +13,7 @@ const WhiteCard = ({title, children}:WhiteCardProps) => {
         style={{
             backgroundColor: "rgba(255,255,255,0.3)",
             borderRadius: 25,
-            minHeight: 400,
+            minHeight: 100,
             marginHorizontal: 22,
             marginVertical: 15,
         }}
@@ -34,6 +34,9 @@ const WhiteCard = ({title, children}:WhiteCardProps) => {
             {title}
         </Text>
         <View style={{borderBottomWidth: 5, borderBottomColor: colors.WHITE_ALT, width: 30}}/>
+      </View>
+      <View>
+        {children}
       </View>
     </View>
   )

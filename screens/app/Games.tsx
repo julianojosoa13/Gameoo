@@ -14,7 +14,7 @@ const Games = () => {
         <View
           style={{
             marginTop: 38,
-            marginHorizontal: 24,
+            marginHorizontal: 32,
             backgroundColor: colors.WHITE_ALT,
             padding: 10,
             borderRadius: 20,
@@ -26,7 +26,7 @@ const Games = () => {
             justifyContent: "space-between"
           }}
         >
-          <Text onPress={() => navigation.navigate("SearchScreen")}>Chercher un jeu...</Text>
+          <Text style={{color: "grey", width: "90%"}} onPress={() => navigation.navigate("SearchScreen")}>Chercher un jeu...</Text>
           <TouchableOpacity>
             <AntDesign name="search1" size={24} color="black" />
           </TouchableOpacity>
