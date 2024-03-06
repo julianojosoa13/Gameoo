@@ -47,7 +47,7 @@ const LoggingOut = () => {
         >
             Déconnexion
         </Text>
-        <LottieView source={require('../../assets/Animations/Lotties/rocket.json')} autoPlay loop style={{width: 150, height: 150}}/>
+        <LottieView source={require('../../assets/Animations/Lotties/rocket-2.json')} autoPlay loop style={{width: 150, height: 150}}/>
       </View>
     </SafeAreaView>
   )
