@@ -17,7 +17,8 @@ export default function App() {
     "Modak": require("./assets/Fonts/Modak-PLKE.ttf"),
     "SF-Thin": require("./assets/Fonts/SF-Pro-Display-Thin.otf"),
     "SF-Regular": require("./assets/Fonts/SF-Pro-Display-Regular.otf"), 
-    "SF-Semibold": require("./assets/Fonts/SF-Pro-Display-Semibold.otf") 
+    "SF-Semibold": require("./assets/Fonts/SF-Pro-Display-Semibold.otf"),
+    "NovaSquare-Regular": require("./assets/Fonts/NovaSquare-Regular.ttf") 
   })
 
   const onLayoutRootView = useCallback(async() => {

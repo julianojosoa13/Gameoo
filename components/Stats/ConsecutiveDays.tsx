@@ -25,7 +25,7 @@ const ConsecutiveDays = () => {
         style={{
             marginLeft: 8,
             color: colors.SEMI_TRANSPARENT,
-            fontFamily: "SF-Semibold",
+            fontFamily: "NovaSquare-Regular",
             fontSize: 32
         }}
       >

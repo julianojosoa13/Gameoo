@@ -1,6 +1,7 @@
 import { 
   ImageBackground, 
   SafeAreaView, 
+  ScrollView, 
   StyleSheet, 
   Text, 
   TouchableOpacity, 
@@ -42,14 +43,12 @@ const Home = () => {
       <ImageBackground source={require('../../assets/Images/bg.png')} style={{width, height: "100%", position: "absolute"}} resizeMode='cover'/>
       <KeyboardAwareScrollView
         contentContainerStyle={{
-
           paddingBottom: 100
         }}
       >  
         <View
           style={{
             marginTop: 38,
-            left: 0,
             width: width,
             height: 80,
             flexDirection: "row",
@@ -88,6 +87,29 @@ const Home = () => {
         </WhiteCard>
 
         <WhiteCard title='Jeux Populaires'>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled={true}
+            snapToInterval={width - 52}
+            snapToAlignment={"center"}
+            decelerationRate={0}
+          >
+           {
+            [1,2,3,4,5].map((item, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    width: width - 52,
+                  }}
+                >
+                  <GameCard />
+                </View>
+              )
+            })
+           }
+          </ScrollView>
 
         </WhiteCard>
 

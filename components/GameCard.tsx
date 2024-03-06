@@ -1,18 +1,21 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { colors } from '../utils/colors'
 import { AntDesign } from '@expo/vector-icons'
 
 const GameCard = () => {
+  const {width} = useWindowDimensions()
   return (
     <View
         style={{
             alignItems: "center",
+            alignSelf: "center",
             borderWidth: 2,
             borderColor: colors.WHITE,
             margin: 15,
             borderRadius: 25,
-            backgroundColor: colors.SEMI_WHITE
+            backgroundColor: colors.SEMI_WHITE,
+            maxWidth: width * 0.75,
         }}
     >
       <TouchableOpacity
@@ -42,7 +45,7 @@ const GameCard = () => {
         style={{
             alignSelf: "center",
             backgroundColor: colors.GREEN,
-            paddingHorizontal: "30%",
+            paddingHorizontal: "20%",
             paddingVertical: 10,
             borderRadius: 15,
             flexDirection: "row",
