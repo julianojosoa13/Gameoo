@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FirstStep from '../../screens/app/FirstStep';
 import { Session } from '@supabase/supabase-js';
 import BottomTabNavigator from './BottomTabNavigator/BottomTabNavigator';
+import LoggingOut from '../../screens/app/LoggingOut';
+import AuthNavigator from '../auth/AuthNavigator';
+import SearchScreen from '../../screens/app/SearchScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,17 +18,11 @@ const AppNavigator = ({ session }: { session: Session | null }) => {
         headerShown: false
       }}
     >
-      {session && session.user ? (
-        <>
-          <Stack.Screen name='FirstStep' component={FirstStep} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name='FirstStep' component={FirstStep} />
-        </>
-      )}
-
+      <Stack.Screen name='FirstStep' component={FirstStep} />
       <Stack.Screen name="Tabs" component={BottomTabNavigator} />
+      <Stack.Screen name="LogOut" component={LoggingOut} />
+      <Stack.Screen name="Auth" component={AuthNavigator} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
     </Stack.Navigator>
   )
 }

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Avatar from './Avatar'
 import { colors } from '../utils/colors'
+import { UI_TEXTS } from '../utils/constants'
 
 interface AvatarBoxProps {
     userTag?: string
@@ -17,7 +18,7 @@ const AvatarBox = ({userTag}: AvatarBoxProps) => {
             style={{justifyContent: "space-around"}}
           >
             <Text style={{fontFamily: "SF-Regular", color: colors.WHITE}}>Bon retour!</Text>
-            <Text style={{fontFamily: "SF-Semibold", color: colors.WHITE}}>{userTag? userTag: "Anomyme"}</Text>
+            <Text style={{fontFamily: "SF-Semibold", color: colors.WHITE}}>{userTag? userTag: UI_TEXTS.USER_NOT_CONNECTED}</Text>
           </View>
         </View>
   )

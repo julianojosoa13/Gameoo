@@ -1,4 +1,13 @@
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { 
+  ImageBackground, 
+  SafeAreaView, 
+  StyleSheet, 
+  Text, 
+  TouchableOpacity, 
+  View, 
+  useWindowDimensions, 
+} from 'react-native'
+
 import React from 'react'
 import AvatarBox from '../../components/AvatarBox'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -6,6 +15,8 @@ import { supabase } from '../../supabase/supabase'
 import WhiteCard from '../../components/WhiteCard'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
+
+import ThreeBarMenu from '../../components/ThreeBarMenu/ThreeBarMenu'
 
 const Home = () => {
   const {width, height} = useWindowDimensions()
@@ -54,14 +65,9 @@ const Home = () => {
             <TouchableOpacity>
               <MaterialCommunityIcons name="bell-outline" size={25} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                if(gamerTag) supabase.auth.signOut()
-                if(!gamerTag) navigation.navigate("Onboarding")
-              }}
-            >
-              <MaterialCommunityIcons name="dots-vertical" size={25} color="white" />
-            </TouchableOpacity>
+
+            <ThreeBarMenu navigation={navigation} gamerTag={gamerTag} />
+            
           </View>
 
         </View>

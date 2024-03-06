@@ -4,6 +4,7 @@ export const colors = {
 
     LIGHT_GREY: "lightgrey",
     SEMI_TRANSPARENT: "rgba(0,0,0,0.3)",
+    SEMI_TRANSPARENT_ALT: "rgba(0,0,0,0.8)",
     FACEBOOK_BLUE: "#4267B2",
 
     WHITE: "#FFF",

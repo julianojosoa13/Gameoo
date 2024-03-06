@@ -8,6 +8,7 @@ import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase/supabase';
 import AppNavigator from './routes/app/AppNavigator';
+import { MenuProvider } from 'react-native-popup-menu';
 
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
     })
     
     supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("Session Changed")
       setSession(session)
     })
   }, [])
@@ -43,10 +45,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <AlertNotificationRoot>
+        <MenuProvider>
+
           <StatusBar />
           {
             session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
           }
+        </MenuProvider>
       </AlertNotificationRoot>
     </NavigationContainer>
   );
