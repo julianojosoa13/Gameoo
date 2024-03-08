@@ -45,15 +45,15 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AlertNotificationRoot>
         <MenuProvider>
 
           <StatusBar />
-          {
-            session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
-          }
+          <AlertNotificationRoot>
+            {
+              session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
+            }
+          </AlertNotificationRoot>
         </MenuProvider>
-      </AlertNotificationRoot>
     </NavigationContainer>
   );
 }
