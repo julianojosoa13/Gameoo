@@ -19,7 +19,7 @@ const ThreeBarMenu = ({navigation, gamerTag}: ThreeBarMenuProps) => {
   return (
     <Menu>
         <MenuTrigger
-            style={{paddingHorizontal: 10, paddingVertical: 5}}
+            style={{paddingHorizontal: 4, paddingVertical: 5}}
         >
             <MaterialCommunityIcons name="dots-vertical" size={25} color="white" />
         </MenuTrigger>

@@ -37,10 +37,11 @@ const Home = () => {
     <SafeAreaView 
       style={{
         flex:1,
-        backgroundColor: "#19173D"
+        // backgroundColor: "#19173D"
+        backgroundColor: colors.MAIN_COLOR
       }}
     >
-      <ImageBackground source={require('../../assets/Images/bg.png')} style={{width, height: "100%", position: "absolute"}} resizeMode='cover'/>
+      {/* <ImageBackground source={require('../../assets/Images/bg.png')} style={{width, height: "100%", position: "absolute"}} resizeMode='cover'/> */}
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingBottom: 100
@@ -62,12 +63,12 @@ const Home = () => {
           <View
             style={{
               flexDirection:"row",
-              gap: 14,
+              gap: 8,
               alignItems: "center",
             }}
           >
             <TouchableOpacity>
-              <MaterialCommunityIcons name="bell-outline" size={25} color="white" />
+              <MaterialCommunityIcons name="cart-outline" size={30} color="white" />
             </TouchableOpacity>
 
             <ThreeBarMenu navigation={navigation} gamerTag={gamerTag} />
