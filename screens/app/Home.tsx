@@ -41,7 +41,7 @@ const Home = () => {
         backgroundColor: colors.MAIN_COLOR
       }}
     >
-      {/* <ImageBackground source={require('../../assets/Images/bg.png')} style={{width, height: "100%", position: "absolute"}} resizeMode='cover'/> */}
+      <ImageBackground source={require('../../assets/Images/bg.png')} style={{width, height: "100%", position: "absolute"}} resizeMode='cover'/>
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingBottom: 100
@@ -77,7 +77,7 @@ const Home = () => {
 
         </View>
               
-        <WhiteCard title='Mes stats'>
+        {/* <WhiteCard title='Mes stats'>
           <View style={{flexDirection: "row", justifyContent: "space-around"}}>
             <ConsecutiveDays />   
             <OpenedChests />
@@ -116,7 +116,7 @@ const Home = () => {
 
         <WhiteCard title='Meilleurs cadeaux du moment'>
           
-        </WhiteCard>
+        </WhiteCard> */}
 
       </KeyboardAwareScrollView>
     </SafeAreaView>
