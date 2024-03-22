@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
@@ -9,6 +10,8 @@ import { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase/supabase';
 import AppNavigator from './routes/app/AppNavigator';
 import { MenuProvider } from 'react-native-popup-menu';
+
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 
 export default function App() {
@@ -44,17 +47,19 @@ export default function App() {
   if (!fontsLoaded) return null
 
   return (
-    <NavigationContainer>
-        <MenuProvider>
+    <GestureHandlerRootView style={{flex:1}}>
+      <NavigationContainer>
+          <MenuProvider>
 
-          <StatusBar />
-          <AlertNotificationRoot>
-            {
-              session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
-            }
-          </AlertNotificationRoot>
-        </MenuProvider>
-    </NavigationContainer>
+            <StatusBar />
+            <AlertNotificationRoot>
+              {
+                session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
+              }
+            </AlertNotificationRoot>
+          </MenuProvider>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 

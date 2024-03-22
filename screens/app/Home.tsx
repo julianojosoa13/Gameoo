@@ -22,6 +22,10 @@ import { colors } from '../../utils/colors'
 import GameCard from '../../components/GameCard';
 import LottieView from 'lottie-react-native'
 import { supabase } from '../../supabase/supabase'
+import Title from '../../components/Title'
+import Coupon from '../../components/Coupon'
+
+import CustomCarousel from 'carousel-with-pagination-rn';
 
 const Home = () => {
   const {width, height} = useWindowDimensions()
@@ -112,11 +116,17 @@ const Home = () => {
 
         </View>
 
-        <Text style={{marginLeft:24, marginTop: 20, fontSize: 24, lineHeight: 32, color:"white" }}>Offres spéciales</Text>
-        <View style={{height: 5, width: 20, backgroundColor: "white", marginLeft: 28}}/>
+        <Title title='Offres spéciales' />
+        <CustomCarousel
+          indicatorColor={[colors.WHITE,colors.SEMI_TRANSPARENT,colors.WHITE]}
+          indicatorHeight={[6,9,6]}
+          indicatorWidth={[6,20,6]}
+          data={[0,1,2,3]}
+          renderItem={({item}) => <Coupon />}
+        />
               
-        <Text style={{marginLeft:24, marginTop: 20, fontSize: 24, lineHeight: 32, color:"white" }}>Populaire</Text>
-        <View style={{height: 5, width: 20, backgroundColor: "white", marginLeft: 28}}/>
+        <Title title='Populaire'/>
+
         {featuredGame? (
           <GameCard
             id={featuredGame.id} 
@@ -140,16 +150,14 @@ const Home = () => {
             <LottieView source={require('../../assets/Animations/Lotties/controller.json')} autoPlay loop style={{width: 75, height: 75}}/>
           </View>
         )}
-        <Text style={{marginLeft:24, marginTop: 20, fontSize: 24, lineHeight: 32, color:"white" }}>Top Jeux</Text>
-        <View style={{height: 5, width: 20, backgroundColor: "white", marginLeft: 28}}/>
+        <Title title='Top Jeux'/>
         {topGames.length > 0? (
 
             <ScrollView 
               horizontal
               pagingEnabled
-              contentContainerStyle={{}}
             >
-              {topGames.map((game, index) => {
+              {topGames?.map((game, index) => {
                 const last = index === 4
                 return (
                   <GameCard
