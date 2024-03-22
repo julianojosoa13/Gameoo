@@ -15,7 +15,7 @@ const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
   const {width} = useWindowDimensions()
   const [isLiked, setIsLiked] = useState(false)
   const [likesNbr, setLikesNbr] = useState(likes)
-  const cardWidth = width * 0.8
+  const cardWidth = width * 0.7
 
   const onLikeAction = () => {
     setIsLiked(!isLiked)
@@ -24,7 +24,7 @@ const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
   return (
         <View
           style={[{
-            paddingHorizontal: 24,
+            paddingHorizontal: 40,
             paddingBottom: 20,
             width
           }]}
@@ -43,7 +43,7 @@ const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
             <TouchableOpacity
               style={{
                 ...StyleSheet.absoluteFillObject,
-                left: cardWidth / 2 - 10,
+                left: cardWidth / 2 - 5,
                 top: cardWidth / 2,
                 zIndex: 2,
                 width: 50,
@@ -65,7 +65,7 @@ const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
                 style={{
                   fontFamily: "NovaSquare-Regular",
                   color: colors.WHITE,
-                  fontSize: 22,
+                  fontSize: 18,
                   alignSelf: "flex-start",
                 }}
               > 

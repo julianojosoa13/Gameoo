@@ -11,7 +11,7 @@ import {
   useWindowDimensions, 
 } from 'react-native'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AvatarBox from '../../components/AvatarBox'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -26,8 +26,10 @@ import Title from '../../components/Title'
 import Coupon from '../../components/Coupon'
 
 import CustomCarousel from 'carousel-with-pagination-rn';
+import { RefProps } from 'carousel-with-pagination-rn/lib/typescript/Interfaces'
 
 const Home = () => {
+  const carouselRef = useRef<RefProps>(null)
   const {width, height} = useWindowDimensions()
   const navigation = useNavigation()
   const route = useRoute()
@@ -41,9 +43,9 @@ const Home = () => {
   useEffect(()=>{
     const fetchGame = async () => {
       const { data, error } = await supabase
-        .from('Games')
+        .from('populargame')
         .select('*')
-        .limit(1);
+        .limit(1)
 
       if (error) {
         console.error('Error fetching game:', error.message);
@@ -56,7 +58,7 @@ const Home = () => {
       }
 
       const { data: topGamesData, error: topGamesError } = await supabase
-        .from('Games')
+        .from('randomgames')
         .select('*')
         .limit(5);
 
@@ -69,7 +71,30 @@ const Home = () => {
         setTopGames(topGamesData);
       }
     }
+
+    const carouselAnim = (carouselIndex, direction) => {
+      setTimeout(()=>{
+        let currentIndex = 0
+        let newDirection = 1
+        if(direction === 1) {
+          carouselRef.current?.showNextItem()
+          currentIndex = carouselIndex + 1
+        }
+        else {
+          carouselRef.current?.showPreviousItem()
+          currentIndex = carouselIndex - 1
+        }
+        if(currentIndex == 3 ) newDirection = 0
+        else{
+          if(currentIndex == 0) newDirection = 1
+          else newDirection = direction
+        }
+        console.log(currentIndex, newDirection)
+        carouselAnim(currentIndex, newDirection)
+      },3000)
+    }
     fetchGame()
+    carouselAnim(0,1)
   },[])
   
   return (
@@ -118,6 +143,7 @@ const Home = () => {
 
         <Title title='Offres spéciales' />
         <CustomCarousel
+          ref={carouselRef}
           indicatorColor={[colors.WHITE,colors.SEMI_TRANSPARENT,colors.WHITE]}
           indicatorHeight={[6,9,6]}
           indicatorWidth={[6,20,6]}
@@ -152,26 +178,24 @@ const Home = () => {
         )}
         <Title title='Top Jeux'/>
         {topGames.length > 0? (
-
-            <ScrollView 
-              horizontal
-              pagingEnabled
-            >
-              {topGames?.map((game, index) => {
-                const last = index === 4
-                return (
+            <CustomCarousel
+              data={topGames}
+              renderItem={({item}) =>{
+                return(
                   <GameCard
-                    key={game.id}
-                    id={game.id}
-                    image={game.cover}
-                    likes={game.likes}
-                    name={game.name}
-                    url={game.url}
-                    last={last}
+                    key={item.id}
+                    id={item.id}
+                    image={item.cover}
+                    likes={item.likes}
+                    name={item.name}
+                    url={item.url}
                   />
                 )
-              })}
-            </ScrollView>
+              }}
+              indicatorHeight={[10,12,10]}
+              indicatorWidth={[10,16,10]}
+              indicatorColor={["white", "orange","white"]}
+            />
         ):(
           <View
             style={{
