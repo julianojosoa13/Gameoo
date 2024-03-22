@@ -1,5 +1,7 @@
 import { 
+  Image,
   ImageBackground, 
+  Pressable, 
   SafeAreaView, 
   ScrollView, 
   StyleSheet, 
@@ -9,20 +11,17 @@ import {
   useWindowDimensions, 
 } from 'react-native'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AvatarBox from '../../components/AvatarBox'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { supabase } from '../../supabase/supabase'
-import WhiteCard from '../../components/WhiteCard'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 import ThreeBarMenu from '../../components/ThreeBarMenu/ThreeBarMenu'
-import ConsecutiveDays from '../../components/Stats/ConsecutiveDays'
-import GPointsWidget from '../../components/Stats/GPointsWidget'
-import OpenedChests from '../../components/Stats/OpenedChests'
 import { colors } from '../../utils/colors'
-import GameCard from '../../components/GameCard'
+import GameCard from '../../components/GameCard';
+import LottieView from 'lottie-react-native'
+import { supabase } from '../../supabase/supabase'
 
 const Home = () => {
   const {width, height} = useWindowDimensions()
@@ -30,8 +29,44 @@ const Home = () => {
   const route = useRoute()
   const {gamerTag} = route?.params || ""
   console.log("route:>> ", route.params)
+  const [featuredGame, setFeaturedGame] = useState(null)
+  const [topGames, setTopGames] = useState([])
 
   const session = null
+
+  useEffect(()=>{
+    const fetchGame = async () => {
+      const { data, error } = await supabase
+        .from('Games')
+        .select('*')
+        .limit(1);
+
+      if (error) {
+        console.error('Error fetching game:', error.message);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        console.log(data[0])
+        setFeaturedGame(data[0]);
+      }
+
+      const { data: topGamesData, error: topGamesError } = await supabase
+        .from('Games')
+        .select('*')
+        .limit(5);
+
+      if (topGamesError) {
+        console.error('Error fetching top games:', topGamesError.message);
+        return;
+      }
+
+      if (topGamesData && topGamesData.length > 0) {
+        setTopGames(topGamesData);
+      }
+    }
+    fetchGame()
+  },[])
   
   return (
     <SafeAreaView 
@@ -76,47 +111,74 @@ const Home = () => {
           </View>
 
         </View>
+
+        <Text style={{marginLeft:24, marginTop: 20, fontSize: 24, lineHeight: 32, color:"white" }}>Offres spéciales</Text>
+        <View style={{height: 5, width: 20, backgroundColor: "white", marginLeft: 28}}/>
               
-        {/* <WhiteCard title='Mes stats'>
-          <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-            <ConsecutiveDays />   
-            <OpenedChests />
-          </View>
-          <Text style={{fontFamily: "SF-Semibold", color: colors.WHITE, marginLeft: 24}}>Dernier jeu: </Text>
-          <View style={{borderBottomWidth: 4, borderBottomColor: colors.WHITE_ALT, width: 30, marginLeft: 28}}/>
-          <GameCard />
-        </WhiteCard>
-
-        <WhiteCard title='Jeux Populaires'>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled={true}
-            snapToInterval={width - 52}
-            snapToAlignment={"center"}
-            decelerationRate={0}
+        <Text style={{marginLeft:24, marginTop: 20, fontSize: 24, lineHeight: 32, color:"white" }}>Populaire</Text>
+        <View style={{height: 5, width: 20, backgroundColor: "white", marginLeft: 28}}/>
+        {featuredGame? (
+          <GameCard
+            id={featuredGame.id} 
+            image={featuredGame.cover}
+            likes={featuredGame.likes}
+            name={featuredGame.name}
+            url={featuredGame.url}
+          />
+        ):(
+          <View
+            style={{
+              width: width - 42,
+              height: width,
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 24,
+              backgroundColor: colors.SEMI_WHITE,
+              borderRadius: 25
+            }}
           >
-           {
-            [1,2,3,4,5].map((item, index) => {
-              return (
-                <View
-                  key={index}
-                  style={{
-                    width: width - 52,
-                  }}
-                >
-                  <GameCard />
-                </View>
-              )
-            })
-           }
-          </ScrollView>
+            <LottieView source={require('../../assets/Animations/Lotties/controller.json')} autoPlay loop style={{width: 75, height: 75}}/>
+          </View>
+        )}
+        <Text style={{marginLeft:24, marginTop: 20, fontSize: 24, lineHeight: 32, color:"white" }}>Top Jeux</Text>
+        <View style={{height: 5, width: 20, backgroundColor: "white", marginLeft: 28}}/>
+        {topGames.length > 0? (
 
-        </WhiteCard>
-
-        <WhiteCard title='Meilleurs cadeaux du moment'>
-          
-        </WhiteCard> */}
+            <ScrollView 
+              horizontal
+              pagingEnabled
+              contentContainerStyle={{}}
+            >
+              {topGames.map((game, index) => {
+                const last = index === 4
+                return (
+                  <GameCard
+                    key={game.id}
+                    id={game.id}
+                    image={game.cover}
+                    likes={game.likes}
+                    name={game.name}
+                    url={game.url}
+                    last={last}
+                  />
+                )
+              })}
+            </ScrollView>
+        ):(
+          <View
+            style={{
+              width: width - 42,
+              height: width,
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 24,
+              backgroundColor: colors.SEMI_WHITE,
+              borderRadius: 25
+            }}
+          >
+            <LottieView source={require('../../assets/Animations/Lotties/controller.json')} autoPlay loop style={{width: 75, height: 75}}/>
+          </View>
+        )}
 
       </KeyboardAwareScrollView>
     </SafeAreaView>
