@@ -1,11 +1,29 @@
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { FlatList, ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import React, { useState } from 'react'
 import { AntDesign, FontAwesome6 } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { colors } from '../../utils/colors'
+import GameCard from '../../components/GameCard'
+import { Game } from '../../models/types'
 
 const SearchScreen = () => {
   const navigation = useNavigation()
+  const route = useRoute()
+  const {games} = route?.params
+
+  const {width} = useWindowDimensions()
+
+  const [filteredGames, setFilteredGames] = useState<Array<Game>>()
+
+  const handleChange = (text) => {
+    if (text.length>= 2) {
+      const newList = games.filter((game:Game)=>game.name.toLocaleLowerCase().includes(text.toLocaleLowerCase()))
+      setFilteredGames(newList)
+    } else {
+      setFilteredGames([])
+    }
+  }
+
   return (
     <SafeAreaView
         style={{flex:1}}
@@ -37,11 +55,32 @@ const SearchScreen = () => {
             justifyContent: "space-between"
           }}
         >
-          <TextInput placeholder='Chercher un jeu...' autoFocus/>
+          <TextInput placeholder='Chercher un jeu...' onChangeText={(text) => handleChange(text)} autoFocus/>
           <TouchableOpacity>
             <AntDesign name="search1" size={24} color="black" />
           </TouchableOpacity>
         </View>
+        <FlatList
+          data={filteredGames}
+          numColumns={2}
+          style={{ flexGrow: 1 }}
+          keyExtractor={item => String(item?.id)}
+          renderItem={({ item, index }) => (
+              <GameCard
+                key={item.id}
+                id={item.id}
+                image={item.cover}
+                likes={item.likes}
+                name={item.name}
+                url={item.url}
+                customWidth={width/2 - 10}
+              />
+          )}
+          contentContainerStyle={{
+            paddingBottom: 140,
+            marginHorizontal: 10
+          }}
+        />
     </SafeAreaView>
   )
 }

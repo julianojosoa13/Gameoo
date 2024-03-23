@@ -24,39 +24,7 @@ const Game = () => {
   return (
     <View style={{flex:1}}>
       <ImageBackground source={require('../../assets/Images/bg.png')} style={{width, height: "100%", position: "absolute", flex:1}} resizeMode='cover'/>
-      <View
-        style={{
-            top: 24,
-            left:20,
-            flexDirection: "row",
-            alignItems: "center",
-            height: 60,
-        }}
-      >
-        <TouchableOpacity
-            style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 20,
-                zIndex: 100
-            }}
-            hitSlop={18}
-            onPress={() => navigation.goBack()}
-        >
-            <FontAwesome6 name="chevron-left" size={25} color={colors.WHITE_ALT}/>
-            <Text
-            style={{
-                fontSize: 18,
-                color: colors.WHITE,
-                fontFamily: "SF-Semibold"
-            }}
-        >
-            Quitter
-        </Text>
-            
-        </TouchableOpacity>
-        
-      </View>
+      
       {loading? (
         <View
             style={{flex:1, justifyContent:"center", alignItems:"center"}}
@@ -64,7 +32,73 @@ const Game = () => {
           <LottieView source={require('../../assets/Animations/Lotties/controller.json')} autoPlay loop style={{width: 150, height: 150}}/>
         </View>
       ) : (
-          <WebView source={{uri: url}} style={{flex:1, margin: 24, marginTop: 78}} />
+        <>
+          <View
+            style={{
+                top: 24,
+                left:20,
+                flexDirection: "row",
+                alignItems: "center",
+                height: 60,
+            }}
+          >
+            <TouchableOpacity
+                style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 20,
+                    zIndex: 100,
+                    backgroundColor: colors.ACCENT_COLOR,
+                    padding:3,
+                    borderRadius: 25,
+                }}
+                hitSlop={18}
+                onPress={() => navigation.goBack()}
+            >
+                <FontAwesome6 name="chevron-left" size={25} color={colors.WHITE_ALT} style={{marginLeft: 10}}/>
+                <Text
+                  style={{
+                      fontSize: 18,
+                      color: colors.WHITE,
+                      fontFamily: "SF-Semibold",
+                      marginRight: 20
+                  }}
+                >
+                    Quitter
+                </Text>
+                
+            </TouchableOpacity>
+           
+            
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 82,
+              width: "100%", 
+              height: 50, 
+              backgroundColor: colors.SEMI_TRANSPARENT,
+              paddingHorizontal: 24,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between"
+            }}
+          > 
+            <Text
+              style={{
+                fontFamily: "SF-Semibold",
+                color: "white",
+                fontSize: 22
+              }}
+            >
+              Votre Score: {' '}
+              <Text>
+                {0}
+              </Text>
+            </Text>
+          </View>
+          <WebView source={{uri: url}} style={{flex:1, margin: 24, marginTop: 78,}} />
+        </>
       )
       }
     </View>

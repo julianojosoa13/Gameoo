@@ -8,7 +8,7 @@ interface GameCardProps {
   image?: string;
   likes: number,
   name: string,
-  id: number,
+  id: string,
   url: string,
   customWidth?: number
 }
@@ -17,8 +17,9 @@ const GameCard = ({image,name, likes, id, url, customWidth}:GameCardProps) => {
   const {width} = useWindowDimensions()
   const [isLiked, setIsLiked] = useState(false)
   const [likesNbr, setLikesNbr] = useState(likes)
-  const cardWidth = !customWidth? width * 0.7 : customWidth * 0.6
+  const cardWidth = !customWidth? width * 0.7 : customWidth * 0.7
   const navigation = useNavigation()
+
   const onLikeAction = () => {
     setIsLiked(!isLiked)
     isLiked? setLikesNbr(likesNbr-1) : setLikesNbr(likesNbr + 1)
@@ -26,7 +27,7 @@ const GameCard = ({image,name, likes, id, url, customWidth}:GameCardProps) => {
   return (
         <View
           style={[{
-            paddingHorizontal: 40,
+            paddingHorizontal: customWidth? 10:40,
             paddingBottom: 20,
             width: !customWidth? width: customWidth
           }]}
@@ -68,7 +69,7 @@ const GameCard = ({image,name, likes, id, url, customWidth}:GameCardProps) => {
               style={{
                 width:cardWidth-20, 
                 height:cardWidth-20, 
-                borderRadius: 25, 
+                borderRadius: 10, 
                 marginTop: 10}}          
             />
             <View
@@ -84,7 +85,8 @@ const GameCard = ({image,name, likes, id, url, customWidth}:GameCardProps) => {
                   fontFamily: "NovaSquare-Regular",
                   color: colors.WHITE,
                   fontSize: customWidth? 14:18,
-                  alignSelf: "flex-start",
+                  alignSelf: customWidth? "center":"flex-start",
+                  textAlign: customWidth? "center":"left"
                 }}
               > 
                 {name}
