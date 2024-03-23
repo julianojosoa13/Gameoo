@@ -1,4 +1,5 @@
 import { 
+  Alert,
   Image,
   ImageBackground, 
   Pressable, 
@@ -27,9 +28,11 @@ import Coupon from '../../components/Coupon'
 
 import CustomCarousel from 'carousel-with-pagination-rn';
 import { RefProps } from 'carousel-with-pagination-rn/lib/typescript/Interfaces'
+import { AntDesign } from '@expo/vector-icons'
 
 const Home = () => {
   const carouselRef = useRef<RefProps>(null)
+  const gamesCarouselRef = useRef<RefProps>(null)
   const {width, height} = useWindowDimensions()
   const navigation = useNavigation()
   const route = useRoute()
@@ -89,7 +92,6 @@ const Home = () => {
           if(currentIndex == 0) newDirection = 1
           else newDirection = direction
         }
-        console.log(currentIndex, newDirection)
         carouselAnim(currentIndex, newDirection)
       },3000)
     }
@@ -142,6 +144,7 @@ const Home = () => {
         </View>
 
         <Title title='Offres spéciales' />
+        
         <CustomCarousel
           ref={carouselRef}
           indicatorColor={[colors.WHITE,colors.SEMI_TRANSPARENT,colors.WHITE]}
@@ -149,8 +152,8 @@ const Home = () => {
           indicatorWidth={[6,20,6]}
           data={[0,1,2,3]}
           renderItem={({item}) => <Coupon />}
-        />
-              
+        /> 
+
         <Title title='Populaire'/>
 
         {featuredGame? (
@@ -178,7 +181,23 @@ const Home = () => {
         )}
         <Title title='Top Jeux'/>
         {topGames.length > 0? (
+          <View>
+            <TouchableOpacity
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                top: 34,
+                height: width*0.8,
+                width:34,
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex:2
+              }}
+              onPress={()=> gamesCarouselRef.current?.showPreviousItem()}
+            >
+              <AntDesign name="caretleft" size={24} color="white" />
+            </TouchableOpacity>
             <CustomCarousel
+              ref={gamesCarouselRef}
               data={topGames}
               renderItem={({item}) =>{
                 return(
@@ -196,6 +215,22 @@ const Home = () => {
               indicatorWidth={[10,16,10]}
               indicatorColor={["white", "orange","white"]}
             />
+            <TouchableOpacity
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                top: 34,
+                left: width - 34,
+                height: width*0.8,
+                width:34,
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex:2,
+              }}
+              onPress={()=> gamesCarouselRef.current?.showNextItem()}
+            >
+              <AntDesign name="caretright" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
         ):(
           <View
             style={{

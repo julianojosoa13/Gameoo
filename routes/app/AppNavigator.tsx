@@ -7,6 +7,7 @@ import BottomTabNavigator from './BottomTabNavigator/BottomTabNavigator';
 import LoggingOut from '../../screens/app/LoggingOut';
 import AuthNavigator from '../auth/AuthNavigator';
 import SearchScreen from '../../screens/app/SearchScreen';
+import Game from '../../screens/app/Game';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const AppNavigator = ({ session }: { session: Session | null }) => {
       <Stack.Screen name="LogOut" component={LoggingOut} />
       <Stack.Screen name="Auth" component={AuthNavigator} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="Game" component={Game} />
     </Stack.Navigator>
   )
 }

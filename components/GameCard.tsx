@@ -2,6 +2,7 @@ import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View, useWindowDi
 import React, { useState } from 'react'
 import { colors } from '../utils/colors'
 import { AntDesign, MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native';
 
 interface GameCardProps {
   image?: string;
@@ -9,14 +10,15 @@ interface GameCardProps {
   name: string,
   id: number,
   url: string,
+  customWidth?: number
 }
 
-const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
+const GameCard = ({image,name, likes, id, url, customWidth}:GameCardProps) => {
   const {width} = useWindowDimensions()
   const [isLiked, setIsLiked] = useState(false)
   const [likesNbr, setLikesNbr] = useState(likes)
-  const cardWidth = width * 0.7
-
+  const cardWidth = !customWidth? width * 0.7 : customWidth * 0.6
+  const navigation = useNavigation()
   const onLikeAction = () => {
     setIsLiked(!isLiked)
     isLiked? setLikesNbr(likesNbr-1) : setLikesNbr(likesNbr + 1)
@@ -26,7 +28,7 @@ const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
           style={[{
             paddingHorizontal: 40,
             paddingBottom: 20,
-            width
+            width: !customWidth? width: customWidth
           }]}
         >
           <View
@@ -40,49 +42,77 @@ const GameCard = ({image,name, likes, id, url}:GameCardProps) => {
               borderRadius: 25,
             }}
           >
-            <TouchableOpacity
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                left: cardWidth / 2 - 5,
-                top: cardWidth / 2,
-                zIndex: 2,
-                width: 50,
-                height: 50
-              }}
-            >
-              <AntDesign 
-                name="playcircleo" 
-                size={50} 
-                color={colors.GREEN} 
-              />
-            </TouchableOpacity>
+            {!customWidth &&
+              <TouchableOpacity
+                style={{
+                  ...StyleSheet.absoluteFillObject,
+                  left: cardWidth / 2 - 5,
+                  top: cardWidth / 2,
+                  zIndex: 2,
+                  width: 50,
+                  height: 50
+                }}
+                onPress={() => navigation.navigate("Game", {url})}
+              >
+                <AntDesign 
+                  name="playcircleo" 
+                  size={50} 
+                  color={colors.GREEN} 
+                />
+              </TouchableOpacity>
+            }
             
-            <Image source={{uri: image}} style={{width:cardWidth-20, height:cardWidth-20, borderRadius: 25, marginTop: 10}}/>
+            
+            <Image 
+              source={{uri: image}} 
+              style={{
+                width:cardWidth-20, 
+                height:cardWidth-20, 
+                borderRadius: 25, 
+                marginTop: 10}}          
+            />
             <View
-              style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center",marginVertical: 10, width: cardWidth -40}}
+              style={{
+                flexDirection: !customWidth? "row": 'column', 
+                justifyContent: "space-between", 
+                alignItems: customWidth? "flex-start":"center",
+                marginVertical: 10, 
+                width: cardWidth -40}}
             >
               <Text
                 style={{
                   fontFamily: "NovaSquare-Regular",
                   color: colors.WHITE,
-                  fontSize: 18,
+                  fontSize: customWidth? 14:18,
                   alignSelf: "flex-start",
                 }}
               > 
                 {name}
               </Text>
-              <Pressable
-                style={{flexDirection: "row", gap: 4, alignItems: "center"}}
-                onPress={onLikeAction}
-              >
-                <Text style={{color: colors.WHITE}}>{likesNbr}</Text>
-                <MaterialIcons 
-                  name={isLiked? "favorite": "favorite-outline"} 
-                  size={24} 
-                  color="white" />
-              </Pressable>
+              {!customWidth && (
+                <Pressable
+                  style={{flexDirection: "row", gap: 4, alignItems: "center"}}
+                  onPress={onLikeAction}
+                >
+                  <Text style={{color: colors.WHITE}}>{likesNbr}</Text>
+                  <MaterialIcons 
+                    name={isLiked? "favorite": "favorite-outline"} 
+                    size={24} 
+                    color="white" />
+                </Pressable>
+              )}
+                
             </View>
+            {customWidth && (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Game", {url})}
+              >
+                <Text>JOUER</Text>
+              </TouchableOpacity>
+            )}
+           
           </View>
+          
         </View>
   )
 }
