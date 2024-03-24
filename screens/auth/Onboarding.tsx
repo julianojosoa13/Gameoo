@@ -138,7 +138,7 @@ const Onboarding = () => {
                     marginTop: 30,
                 }}
             >
-                <Pressable
+                {/* <Pressable
                     hitSlop={2}
                     onPress={GoToApp}
                 >
@@ -152,7 +152,7 @@ const Onboarding = () => {
                     >
                         COMMENCER
                     </Text>
-                </Pressable>
+                </Pressable> */}
                 <TouchableOpacity
                     style={{
                         backgroundColor: "orange",

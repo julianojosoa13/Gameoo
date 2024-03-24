@@ -11,14 +11,14 @@ interface AvatarBoxProps {
 const AvatarBox = ({userTag}: AvatarBoxProps) => {
   return (
     <View 
-          style={{flexDirection: "row", gap: 12, alignItems: "center"}}
+          style={{flexDirection: "row", gap: 4, alignItems: "center"}}
         >
           <Avatar />
           <View
-            style={{justifyContent: "space-around"}}
+            style={{justifyContent: "flex-start"}}
           >
             <Text style={{fontFamily: "SF-Regular", color: colors.WHITE}}>Bon retour!</Text>
-            <Text style={{fontFamily: "SF-Semibold", color: colors.WHITE}}>{userTag? userTag: UI_TEXTS.USER_NOT_CONNECTED}</Text>
+            <Text style={{fontFamily: "SF-Semibold", color: colors.WHITE,fontSize:12}}>{userTag? userTag: UI_TEXTS.USER_NOT_CONNECTED}</Text>
           </View>
         </View>
   )

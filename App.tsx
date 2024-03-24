@@ -12,6 +12,7 @@ import AppNavigator from './routes/app/AppNavigator';
 import { MenuProvider } from 'react-native-popup-menu';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { UserProvider } from './context/UserContext';
 
 
 export default function App() {
@@ -50,13 +51,14 @@ export default function App() {
     <GestureHandlerRootView style={{flex:1}}>
       <NavigationContainer>
           <MenuProvider>
-
-            <StatusBar />
-            <AlertNotificationRoot>
-              {
-                session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
-              }
-            </AlertNotificationRoot>
+            <UserProvider>
+              <StatusBar />
+              <AlertNotificationRoot>
+                {
+                  session && session.user ? <AppNavigator  session={session} /> : <AuthNavigator />
+                }
+              </AlertNotificationRoot>
+            </UserProvider>
           </MenuProvider>
       </NavigationContainer>
     </GestureHandlerRootView>

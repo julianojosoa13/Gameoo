@@ -1,21 +1,78 @@
-import { Alert, ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { Alert, BackHandler, ImageBackground, Pressable, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import { WebView } from 'react-native-webview';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
+import { UserContext } from '../../context/UserContext';
+import { addCoinsToUserProfile } from '../../utils/helper';
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 
 const Game = () => {
   const {width, height} = useWindowDimensions()
   const navigation = useNavigation()
   const route = useRoute()
   const [loading, setLoading] = useState(true)
+  const [points, setPoints] = useState(0)
+  const {userProfile} = useContext(UserContext)
+
+  const onGoBack = () => {
+    const sendData = async () => {
+      await addCoinsToUserProfile(userProfile!.user_id, points)
+    }
+
+    sendData()
+    console.log(points)
+    if(points > 0) {
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: "Bravo",
+        textBody: `Vous avez gagner ${points} Points!`,
+        button: "Ok",
+      })
+    }
+    navigation.goBack()
+  }
 
   useEffect(()=> {
-    setTimeout(() => {
+    const loadingTimer = setInterval(() => {
         setLoading(false)
+        clearInterval(loadingTimer)
     }, 2200);
+
+    const pointsTimer = setInterval(() => {
+      setPoints(prevPoints => {
+        console.log(prevPoints)
+        return prevPoints + 15
+      });
+    }, 30000); // 60000 milliseconds = 1 minute
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Perform cleanup when navigating away from the screen
+      const sendData = async () => {
+        await addCoinsToUserProfile(userProfile!.user_id, points)
+      }
+
+      sendData()
+      console.log(points)
+      if(points > 0) {
+        Dialog.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Bravo",
+          textBody: `Vous avez gagner ${points} Points!`,
+          button: "Ok",
+        })
+      }
+      // Add code here to save the current points or perform any other necessary actions
+      return false; // Return false to prevent default back button behavior
+    });
+
+    return async () => {
+      clearInterval(pointsTimer); // Clean up the timer when the component unmounts or the dependencies change
+      backHandler.remove()
+    };
+
   }, [])
 
   const {url} = route.params
@@ -53,7 +110,7 @@ const Game = () => {
                     borderRadius: 25,
                 }}
                 hitSlop={18}
-                onPress={() => navigation.goBack()}
+                onPress={() => onGoBack()}
             >
                 <FontAwesome6 name="chevron-left" size={25} color={colors.WHITE_ALT} style={{marginLeft: 10}}/>
                 <Text
@@ -68,6 +125,31 @@ const Game = () => {
                 </Text>
                 
             </TouchableOpacity>
+
+            <Pressable
+              style={{
+                position:"absolute",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 4,
+                zIndex: 100,
+                backgroundColor: "white",
+                borderRadius: 25,
+                right: 44,
+                padding: 5,
+                paddingHorizontal: 20
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.ACCENT_COLOR,
+                  fontFamily: "SF-Semibold"
+                }}
+              >
+                {userProfile.coins}
+              </Text>
+              <FontAwesome6 name="coins" size={24} color="gold" />
+            </Pressable>
            
             
           </View>

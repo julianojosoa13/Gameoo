@@ -8,6 +8,7 @@ import LoggingOut from '../../screens/app/LoggingOut';
 import AuthNavigator from '../auth/AuthNavigator';
 import SearchScreen from '../../screens/app/SearchScreen';
 import Game from '../../screens/app/Game';
+import Shop from '../../screens/app/Shop';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const AppNavigator = ({ session }: { session: Session | null }) => {
       <Stack.Screen name="Auth" component={AuthNavigator} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="Game" component={Game} />
+      <Stack.Screen name="Shop" component={Shop} />
     </Stack.Navigator>
   )
 }

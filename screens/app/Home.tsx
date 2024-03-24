@@ -12,9 +12,9 @@ import {
   useWindowDimensions, 
 } from 'react-native'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import AvatarBox from '../../components/AvatarBox'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
@@ -29,6 +29,9 @@ import Coupon from '../../components/Coupon'
 import CustomCarousel from 'carousel-with-pagination-rn';
 import { RefProps } from 'carousel-with-pagination-rn/lib/typescript/Interfaces'
 import { AntDesign } from '@expo/vector-icons'
+import { UserContext } from '../../context/UserContext'
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification'
+import { addCoinsToUserProfile } from '../../utils/helper'
 
 const Home = () => {
   const carouselRef = useRef<RefProps>(null)
@@ -39,11 +42,52 @@ const Home = () => {
   const {gamerTag} = route?.params || ""
   console.log("route:>> ", route.params)
   const [featuredGame, setFeaturedGame] = useState(null)
+  const {userProfile, setUserProfile} = useContext(UserContext)
   const [topGames, setTopGames] = useState([])
 
   const session = null
 
-  useEffect(()=>{
+  useEffect(()=>{ 
+    let localUserId   
+    const fetchUserProfile = async () => {
+      const res = await supabase.auth.getUser();
+      if (!res.data) {
+          console.error('User is not authenticated');
+          return;
+      }
+
+      const userId = res.data.user?.id;
+      const { data, error } = await supabase
+        .from('UserProfile')
+        .select('*')
+        .eq('user_id', userId)
+        .limit(1)
+        .single()
+
+      if (error) {
+        console.error('Error fetching game:', error.message);
+        return;
+      }
+
+      if (data ) {
+        console.log(data)
+        setUserProfile(data);
+        localUserId = data.user_id
+        await addCoinsToUserProfile(localUserId,1000)
+        if(data.coins === 0) {
+          Dialog.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: "Felicitations",
+            textBody: "Vous avez gagner 1000 Points\nPour votre première connexion!",
+            button: "Accepter",
+            onPressButton: async () => {
+              Dialog.hide()
+            }
+        })
+        }
+      }
+    }
+
     const fetchGame = async () => {
       const { data, error } = await supabase
         .from('populargame')
@@ -95,8 +139,27 @@ const Home = () => {
         carouselAnim(currentIndex, newDirection)
       },3000)
     }
+    fetchUserProfile()
     fetchGame()
     carouselAnim(0,1)
+
+    const subscription = supabase
+    .channel('UserProfile')
+    .on('postgres_changes', 
+      {event: '*', schema: 'public', table:'UserProfile'}
+      ,payload => {
+        console.log('Change received!', payload.new.user_id);
+        console.log('localID :>> ', localUserId)
+        if (payload.new.user_id === localUserId) {
+          setUserProfile(payload.new);
+        }
+      })
+      .subscribe();
+
+    // Return a cleanup function to unsubscribe when the component unmounts
+    return () => {
+      subscription.unsubscribe();
+    };
   },[])
   
   return (
@@ -129,13 +192,36 @@ const Home = () => {
           <View
             style={{
               flexDirection:"row",
-              gap: 8,
+              gap: 2,
               alignItems: "center",
             }}
           >
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <MaterialCommunityIcons name="cart-outline" size={30} color="white" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <Pressable
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 4,
+                zIndex: 100,
+                backgroundColor: "white",
+                borderRadius: 25,
+                padding: 5,
+                paddingHorizontal: 20
+              }}
+              onPress={() => navigation.navigate("Shop")}
+            >
+              <Text
+                style={{
+                  color: colors.ACCENT_COLOR,
+                  fontFamily: "SF-Semibold"
+                }}
+              >
+                {userProfile?.coins}
+              </Text>
+              <FontAwesome6 name="coins" size={24} color="gold" />
+            </Pressable>
 
             <ThreeBarMenu navigation={navigation} gamerTag={gamerTag} />
             
