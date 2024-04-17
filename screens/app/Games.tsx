@@ -1,4 +1,4 @@
-import { FlatList, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import { FlatList, ImageBackground, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors } from '../../utils/colors'
 import { AntDesign } from '@expo/vector-icons'
@@ -75,12 +75,32 @@ const Games = () => {
         style={{flex:1}}
     >
         <ImageBackground source={require('../../assets/Images/bg.png')} style={{width: "100%", height:"100%", position: "absolute"}} resizeMode='cover'/>
-        
+        <Pressable
+          style={{
+            marginTop: 38,
+            marginHorizontal: 32,
+            backgroundColor: colors.WHITE_ALT,
+            padding: 10,
+            borderRadius: 20,
+            borderWidth: 2,
+            borderColor: colors.MAIN_COLOR,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+          onPress={() => navigation.navigate("SearchScreen")}
+        >
+          <Text style={{color: "grey", width: "90%", height: 20}} onPress={() => navigation.navigate("SearchScreen",{games})}>Chercher un jeu...</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen",{games})}>
+            <AntDesign name="search1" size={24} color="black" />
+          </TouchableOpacity>
+        </Pressable>
+        <Categories categories={categories} onCategoryPress={onCategoryChange}/>
         <FlatList
           ListHeaderComponent={() => {
             return (
               <>
-                <View
+                {/* <View
                   style={{
                     marginTop: 38,
                     marginHorizontal: 32,
@@ -100,7 +120,7 @@ const Games = () => {
                     <AntDesign name="search1" size={24} color="black" />
                   </TouchableOpacity>
                 </View>
-                <Categories categories={categories} selectedCategory={selectedCategory} onCategoryPress={(cat:Category) => onCategoryChange(cat)}/>
+                <Categories categories={categories} onCategoryPress={onCategoryChange}/> */}
               </>
             )
           }}
@@ -121,7 +141,7 @@ const Games = () => {
           )}
           contentContainerStyle={{
             paddingBottom: 140,
-            marginHorizontal: 10
+            marginHorizontal: 10,
           }}
         />
     </SafeAreaView>
